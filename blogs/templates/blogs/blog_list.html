@@ -1,0 +1,31 @@
+{% extends 'blogs/base.html' %}
+{% load static %}
+
+{% block title %}المدونات{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'blogs/css/blog_list.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <a href="{% url 'home' %}" class="back-link">
+        <i class="fas fa-arrow-right me-2"></i>العودة إلى الرئيسية
+    </a>
+    
+    <div class="blog-container">
+        {% for blog in blogs %}
+            <a href="{% url 'blog_detail' blog.id %}" class="blog-card fade-in">
+                <div class="blog-image">
+                    <img src="{{ blog.image.url }}" alt="{{ blog.name }}">
+                </div>
+                <div class="blog-info">
+                    <h2>{{ blog.created_date }}</h2>
+                    <p>{{ blog.name }}</p>
+                    <span class="read-more">اقرأ المزيد <i class="fas fa-arrow-left ms-2"></i></span>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
