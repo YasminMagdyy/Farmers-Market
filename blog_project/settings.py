@@ -121,6 +121,12 @@ USE_I18N = True
 
 USE_TZ = True
 
+# for multiple languages adding Django's i18n support
+USE_I18N = True
+USE_L10N = True
+
+TIME_ZONE = 'Africa/Cairo'  # Example for Egypt
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/

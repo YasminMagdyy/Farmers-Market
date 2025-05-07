@@ -3,7 +3,21 @@
     margin: 0 auto;
     padding: 40px 20px;
 }
+/* Add to existing blog_detail.css or create if doesn't exist */
+.blog-detail {
+    border-left: 8px solid #4CAF50; /* Thicker green left border */
+    padding: 25px;
+    background-color: white; /* Optional light background */
+    border-radius: 0 10px 10px 10px; /* Rounded corners except top-left */
+    margin: 20px 0;
+}
 
+.detail-image {
+    border-left: 4px solid #4CAF50; /* Border for image */
+    padding: 5px;
+    background: white;
+    border-radius: 0 6px 6px 6px;
+}
 .back-link {
     display: inline-block;
     margin-bottom: 30px;

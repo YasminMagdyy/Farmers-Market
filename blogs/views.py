@@ -12,3 +12,4 @@ def blog_list(request):
 def blog_detail(request, blog_id):
     blog = Blog.objects.get(id=blog_id)
     return render(request, 'blogs/blog_detail.html', {'blog': blog})
+

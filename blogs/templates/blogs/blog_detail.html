@@ -1,7 +1,7 @@
 {% extends 'blogs/base.html' %}
 {% load static %}
 
-{% block title %}{{ blog.name }} - المدونات{% endblock %}
+{% block title %}{{ blog.name }} - Blogs{% endblock %}
 
 {% block extra_css %}
     <link rel="stylesheet" href="{% static 'blogs/css/blog_detail.css' %}">
@@ -10,7 +10,7 @@
 {% block content %}
 <div class="blog-detail fade-in">
     <a href="{% url 'blog_list' %}" class="back-link">
-        <i class="fas fa-arrow-right me-2"></i>العودة إلى المدونات
+        <i class="fas fa-arrow-right me-2"></i>Back to Blogs
     </a>
     
     <img src="{{ blog.image.url }}" alt="{{ blog.name }}" class="detail-image">
