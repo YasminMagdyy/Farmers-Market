@@ -7,3 +7,11 @@ class Blog(models.Model):
     image = models.ImageField(upload_to='blog_images/')
     def __str__(self):
         return self.name
+
+class Subscriber(models.Model):
+    email = models.EmailField(unique=True)
+    subscribed_at = models.DateTimeField(auto_now_add=True)
+    notify = models.BooleanField(default=False)
+
+    def str(self):
+        return self.email

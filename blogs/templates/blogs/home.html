@@ -79,47 +79,48 @@
         </div>
     </section>
 
-    <!-- Testimonials Section -->
-    <section class="scroll-animate">
-        <div class="container">
-            <div class="section-header wow fadeInUp" data-wow-delay="0.1s">
-                <h1>Our Services</h1>
+<!-- Services Section -->
+<section class="services-section scroll-animate">
+    <div class="container">
+        <div class="section-header wow fadeInUp" data-wow-delay="0.1s">
+            <h1>Our Services</h1>
+            <p>Discover the range of services we offer to bring you the best organic products</p>
+        </div>
+        
+        <div class="services-container wow fadeInUp" data-wow-delay="0.2s">
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-truck"></i>
+                </div>
+                <h4>Fast Delivery</h4>
+                <p>Get your fresh products delivered to your doorstep within 24 hours.</p>
             </div>
             
-            <div id="testimonial-carousel" class="carousel slide wow fadeInUp" data-wow-delay="0.2s" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <div class="testimonial-item mx-auto">
-                            <p>Excellent and fresh products, thank you Farmers Market!</p>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="testimonial-item mx-auto">
-                            <p>Excellent service and high quality products.</p>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="testimonial-item mx-auto">
-                            <p>The experience was amazing, I'll be back again!</p>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="testimonial-item mx-auto">
-                            <p>Healthy products and reasonable prices.</p>
-                        </div>
-                    </div>
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-seedling"></i>
                 </div>
-                
-                <button class="carousel-control-prev" type="button" data-bs-target="#testimonial-carousel" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#testimonial-carousel" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
+                <h4>Organic Guarantee</h4>
+                <p>100% certified organic products with no harmful chemicals.</p>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-hand-holding-usd"></i>
+                </div>
+                <h4>Fair Prices</h4>
+                <p>Direct from farmers means better prices for you and fair wages for them.</p>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-recycle"></i>
+                </div>
+                <h4>Eco Packaging</h4>
+                <p>We use biodegradable and recyclable packaging materials.</p>
             </div>
         </div>
-    </section>
+    </div>
+</section>
     {% include 'about_us/farmers.html'%}
 {% endblock %}

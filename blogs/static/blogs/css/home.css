@@ -1,7 +1,7 @@
 /* Homepage GIF Banner */
 .home-gif-banner {
     width: 100%;
-    height: auto;
+    height: 740px; /* Reduced height for larger screens */
     overflow: hidden;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -10,9 +10,8 @@
 
 .home-gif-banner img {
     width: 100%;
-    height: auto;
+    height: 100%; /* Ensure image fills the container */
     display: block;
-    /* object-fit: cover; */
     transition: transform 0.5s ease;
 }
 
@@ -22,10 +21,11 @@
 
 @media (max-width: 768px) {
     .home-gif-banner {
-        height: 180px;
+        height: 150px; /* Reduced height for mobile */
         margin-bottom: 30px;
     }
 }
+
 /* Scroll Animation Styles */
 .scroll-animate {
     opacity: 0;
@@ -43,6 +43,7 @@ section {
     margin-bottom: 80px;
     padding: 40px 0;
 }
+
 /* About Section */
 .about-section {
     padding: 80px 0;
@@ -174,7 +175,66 @@ section {
     font-size: 1rem;
 }
 
-/* Testimonials Section */
+/* Services Section */
+.services-section {
+    padding: 80px 0;
+    background-color: var(--light-bg);
+}
+
+.services-container {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 20px;
+    padding: 20px 0;
+    scrollbar-width: none; /* For Firefox */
+}
+
+.services-container::-webkit-scrollbar {
+    display: none; /* For Chrome/Safari */
+}
+
+.service-card {
+    flex: 0 0 calc(50% - 10px);
+    scroll-snap-align: start;
+    background: var(--white);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    text-align: center;
+    border-top: 4px solid var(--primary-color);
+    border-left: 2px solid var(--primary-light);
+    transition: var(--transition);
+    min-height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.service-card h4 {
+    color: var(--primary-color);
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+}
+
+.service-card p {
+    color: #666;
+    font-size: 1rem;
+    margin-bottom: 0;
+}
+
+.service-icon {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+/* Testimonials Section (Kept for reference, but you can remove if not needed) */
 .testimonials-section {
     padding: 80px 0;
     background-color: var(--light-bg);
@@ -195,9 +255,11 @@ section {
     font-style: italic;
     line-height: 1.8;
 }
-.carousel{
+
+.carousel {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
 }
+
 .carousel-control-prev, .carousel-control-next {
     width: 40px;
     height: 40px;
@@ -223,7 +285,19 @@ section {
         font-size: 2rem;
     }
     
-    .about-section, .features-section, .testimonials-section {
+    .about-section, .features-section, .services-section, .testimonials-section {
         padding: 60px 0;
+    }
+}
+
+@media (min-width: 992px) {
+    .services-container {
+        justify-content: center;
+        overflow-x: hidden;
+        flex-wrap: wrap;
+    }
+    
+    .service-card {
+        flex: 0 0 calc(25% - 20px);
     }
 }

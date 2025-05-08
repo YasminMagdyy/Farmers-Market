@@ -87,3 +87,44 @@
         font-size: 1.5rem;
     }
 }
+/* Add these new styles */
+.blog-header h1 i {
+    color: #4CAF50;
+    font-size: 0.8em;
+}
+
+.blog-image-container {
+    position: relative;
+    margin: 20px 0;
+}
+
+.image-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background: rgba(76, 175, 80, 0.8);
+    color: white;
+    padding: 5px 10px;
+    font-size: 0.9em;
+}
+
+.blog-content i {
+    color: #81C784;
+    margin-right: 8px;
+}
+
+.blog-footer {
+    margin-top: 30px;
+    padding-top: 15px;
+    border-top: 1px dashed #ccc;
+}
+
+.tags i {
+    color: #4CAF50;
+    margin-right: 5px;
+}
+
+.badge {
+    margin-right: 5px;
+    font-weight: normal;
+}
