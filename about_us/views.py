@@ -5,3 +5,6 @@ def about_us(requests):
 
 def imp_farmers(request):
     return render(request, 'about_us/imp_farmers.html', {})
+
+def farmers(request):
+        return render(request, 'about_us/farmers.html', {})
