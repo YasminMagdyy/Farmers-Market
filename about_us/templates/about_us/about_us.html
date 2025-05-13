@@ -1,10 +1,13 @@
+{% extends 'blogs/base.html' %}
 
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Our Story - Farmer's Market</title>
   <style>
+
     body {
       margin: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -37,17 +40,18 @@
     }
 
     .leaf {
-      position: absolute;
-      top: -20px;
-      width: 190px;
-      padding: 20px;
-      background: #c5e1a5;
-      border-radius: 20px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-      transform: rotate(-3deg);
-      transition: transform 0.3s;
-      margin-top: 150px;
-    }
+    position: absolute;
+    top: -20px;
+    width: 250px;
+    padding: 20px 20px 20px;
+    background: #c5e1a5;
+    border-radius: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transform: rotate(-3deg);
+    transition: transform 0.3s;
+    margin-top: 150px;
+
+}
 
     .leaf:hover {
       transform: scale(1.05);
@@ -60,9 +64,20 @@
     }
 
     .leaf:nth-child(1) { left: 0; }
-    .leaf:nth-child(2) { left: 25%; top: 30px; background: #aed581; }
-    .leaf:nth-child(3) { left: 50%; }
-    .leaf:nth-child(4) { left: 75%; top: 30px; background: #dcedc8; }
+    .leaf:nth-child(2) {
+    left: 28%;
+    top: 30px;
+    background: #aed581;
+}
+
+    .leaf:nth-child(3) {
+      left: 55%;
+  }
+    .leaf:nth-child(4) {
+    left: 83%;
+    top: 20px;
+    background: #dcedc8;
+}
 
     .leaf h3 {
       margin: 0 0 5px;
@@ -76,14 +91,14 @@
 
     /* Mission & Vision Sections */
     .mv-container {
-      width: 90%;
-      max-width: 1000px;
-      margin: 80px auto;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 30px;
-    }
+    width: 90%;
+    max-width: 1000px;
+    margin: 100px auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 30px;
+}
 
     .mission, .vision {
       flex: 1;
@@ -212,23 +227,7 @@
       color: #c8e6c9;
     }
     
-    .connector {
-      position: absolute;
-      width: 2px;
-      background: rgba(255,255,255,0.7);
-      height: 30px;
-      top: -30px;
-      left: 50%;
-    }
-    
-    .horizontal-connector {
-      position: absolute;
-      height: 2px;
-      background: rgba(255,255,255,0.7);
-      top: 50px;
-      width: calc(100% + 30px);
-      left: calc(50% + 50px);
-    }
+
     
     .founders {
       margin-bottom: 60px;
@@ -252,14 +251,7 @@
       border-color: #aed581;
     }
 
-    footer {
-      text-align: center;
-      padding: 30px;
-      background: #33691e;
-      color: white;
-      font-family: 'Georgia', serif;
-    }
-    
+
     /* Spacer between roadmap and mission/vision */
     .section-spacer {
       height: 150px;
@@ -271,9 +263,10 @@
     /* Video Section */
     .video-section {
       width: 90%;
-      max-width: 800px;
-      margin: 50px auto;
+      max-width: 1000px;
+      margin: 30px auto;
       text-align: center;
+      padding: 50px;
     }
     
     .video-container {
@@ -300,88 +293,10 @@
       color: rgb(28, 120, 63);
       font-family: 'Georgia', serif;
       margin-bottom: 30px;
+      margin-top: 50px;
     }
     
-    /* Modal Styles */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 1000;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0,0,0,0.8);
-      overflow: auto;
-    }
-    
-    .modal-content {
-      background-color: #fefefe;
-      margin: 5% auto;
-      padding: 30px;
-      border-radius: 15px;
-      width: 80%;
-      max-width: 600px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-      position: relative;
-      animation: modalopen 0.4s;
-    }
-    
-    @keyframes modalopen {
-      from {opacity: 0; transform: translateY(-50px);}
-      to {opacity: 1; transform: translateY(0);}
-    }
-    
-    .close {
-      position: absolute;
-      top: 15px;
-      right: 25px;
-      font-size: 28px;
-      font-weight: bold;
-      color: #aaa;
-      cursor: pointer;
-    }
-    
-    .close:hover {
-      color: #333;
-    }
-    
-    .modal-header {
-      display: flex;
-      align-items: center;
-      margin-bottom: 20px;
-      border-bottom: 1px solid #eee;
-      padding-bottom: 15px;
-    }
-    
-    .modal-avatar {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      margin-right: 20px;
-      object-fit: cover;
-      border: 4px solid #8bc34a;
-    }
-    
-    .modal-header-text h2 {
-      margin: 0;
-      color: #558b2f;
-    }
-    
-    .modal-header-text p {
-      margin: 5px 0 0;
-      font-style: italic;
-      color: #666;
-    }
-    
-    .modal-body {
-      line-height: 1.6;
-      color: #333;
-    }
-    
-    .modal-body p {
-      margin-bottom: 15px;
-    }
+ 
   </style>
 </head>
 <body>
@@ -434,124 +349,8 @@
     </div>
   </div>
 
-  <!-- Team Hierarchy Section -->
-  <div class="team-section">
-    <div class="team-tree">
-      <div class="team-title">Meet Our Growing Family</div>
-      
-      <!-- Founders -->
-      <div class="tree-level founders">
-        <div class="person" onclick="openModal('Jamie Wilson', 'Co-Founder', '👩‍🌾', 'Jamie grew up on a small family farm and always dreamed of creating a space where local growers could thrive. With a degree in Sustainable Agriculture, she brings both passion and expertise to our market.')">
-          <div class="avatar">👩‍🌾</div>
-          <div class="name">Jamie Wilson</div>
-          <div class="role">Co-Founder</div>
-        </div>
-        <div class="person" onclick="openModal('Alex Green', 'Co-Founder', '👨‍🌾', 'Alex comes from a long line of farmers and has a background in business management. He combines traditional farming wisdom with modern market strategies to help our vendors succeed.')">
-          <div class="avatar">👨‍🌾</div>
-          <div class="name">Alex Green</div>
-          <div class="role">Co-Founder</div>
-        </div>
-      </div>
-      
-      <!-- Managers -->
-      <div class="tree-level managers">
-        <div class="person" onclick="openModal('Taylor Smith', 'Market Manager', '👩‍💼', 'Taylor joined us in 2019 after managing several successful farmers markets in the region. Their organizational skills and community focus keep our market running smoothly every week.')">
-          <div class="connector"></div>
-          <div class="avatar">👩‍💼</div>
-          <div class="name">Taylor Smith</div>
-          <div class="role">Market Manager</div>
-        </div>
-        <div class="person" onclick="openModal('Morgan Lee', 'Farm Coordinator', '👨‍💼', 'Morgan works directly with our farm vendors to ensure quality and diversity of produce. With a background in organic farming, he helps new growers get established.')">
-          <div class="connector"></div>
-          <div class="avatar">👨‍💼</div>
-          <div class="name">Morgan Lee</div>
-          <div class="role">Farm Coordinator</div>
-        </div>
-        <div class="person" onclick="openModal('Riley Jones', 'Vendor Relations', '👩‍🔧', 'Riley is the friendly face who helps new vendors join our market. She coordinates spaces, permits, and ensures all our vendors have what they need to be successful.')">
-          <div class="connector"></div>
-          <div class="avatar">👩‍🔧</div>
-          <div class="name">Riley Jones</div>
-          <div class="role">Vendor Relations</div>
-        </div>
-      </div>
-      
-      <!-- Team Leads -->
-      <div class="tree-level team-leads">
-        <div class="person" onclick="openModal('Casey Brown', 'Produce Lead', '🍎', 'Casey oversees our fresh produce section, working with farmers to ensure the best seasonal offerings. Their weekly "harvest highlights" help customers discover new favorites.')">
-          <div class="connector"></div>
-          <div class="horizontal-connector"></div>
-          <div class="avatar">🍎</div>
-          <div class="name">Casey Brown</div>
-          <div class="role">Produce Lead</div>
-        </div>
-        <div class="person" onclick="openModal('Jordan White', 'Dairy Lead', '🥛', 'Jordan manages our dairy and cheese vendors, with a focus on sustainable practices. They host popular cheese tasting events every month.')">
-          <div class="connector"></div>
-          <div class="horizontal-connector"></div>
-          <div class="avatar">🥛</div>
-          <div class="name">Jordan White</div>
-          <div class="role">Dairy Lead</div>
-        </div>
-        <div class="person" onclick="openModal('Chris Baker', 'Bakery Lead', '🍞', 'Chris coordinates our artisan bakers and ensures a delicious variety of breads and pastries. A trained pastry chef, they also teach baking classes at the market.')">
-          <div class="connector"></div>
-          <div class="horizontal-connector"></div>
-          <div class="avatar">🍞</div>
-          <div class="name">Chris Baker</div>
-          <div class="role">Bakery Lead</div>
-        </div>
-        <div class="person" onclick="openModal('Sam Carter', 'Artisans Lead', '✂️', 'Sam works with our craft vendors, from pottery to textiles. They organize special artisan weekends that showcase the incredible talent in our community.')">
-          <div class="connector"></div>
-          <div class="horizontal-connector"></div>
-          <div class="avatar">✂️</div>
-          <div class="name">Sam Carter</div>
-          <div class="role">Artisans Lead</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal -->
-  <div id="teamModal" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal()">&times;</span>
-      <div class="modal-header">
-        <div class="modal-avatar" id="modalAvatar"></div>
-        <div class="modal-header-text">
-          <h2 id="modalName"></h2>
-          <p id="modalRole"></p>
-        </div>
-      </div>
-      <div class="modal-body">
-        <p id="modalBio"></p>
-      </div>
-    </div>
-  </div>
-
-  <footer>
-    Thank you for growing with us 🌱
-  </footer>
-
-  <script>
-    // Modal functions
-    function openModal(name, role, emoji, bio) {
-      document.getElementById('modalName').textContent = name;
-      document.getElementById('modalRole').textContent = role;
-      document.getElementById('modalAvatar').textContent = emoji;
-      document.getElementById('modalBio').textContent = bio;
-      document.getElementById('teamModal').style.display = 'block';
-    }
-    
-    function closeModal() {
-      document.getElementById('teamModal').style.display = 'none';
-    }
-    
-    // Close modal when clicking outside of it
-    window.onclick = function(event) {
-      const modal = document.getElementById('teamModal');
-      if (event.target == modal) {
-        closeModal();
-      }
-    }
-  </script>
 
 </body>
 </html>
+{% include 'about_us/ops_team.html' %}
+{% endblock %}
