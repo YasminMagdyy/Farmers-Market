@@ -1,87 +1,388 @@
-{% extends 'contactus/base.html' %}
-
-
-
+{% extends 'blogs/base.html' %}
+{% load static %}
 {% block content %}
 
-    <!-- Contact Start -->
-    <div class="container-xxl py-6">
-        <div class="container">
-            <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
-                <h1 class="display-5 mb-3">Contact Us</h1>
-                <p>Tempor ut dolore lorem kasd vero ipsum sit eirmod sit. Ipsum diam justo sed rebum vero dolor duo.</p>
-            </div>
-            <div class="row g-5 justify-content-center">
-                <div class="col-lg-5 col-md-12 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="bg-primary text-white d-flex flex-column justify-content-center h-100 p-5">
-                        <h5 class="text-white">Call Us</h5>
-                        <p class="mb-5"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
-                        <h5 class="text-white">Email Us</h5>
-                        <p class="mb-5"><i class="fa fa-envelope me-3"></i>info@example.com</p>
-                        <h5 class="text-white">Office Address</h5>
-                        <p class="mb-5"><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
-                        <h5 class="text-white">Follow Us</h5>
-                        <div class="d-flex pt-2">
-                            <a class="btn btn-square btn-outline-light rounded-circle me-1" href=""><i class="fab fa-twitter"></i></a>
-                            <a class="btn btn-square btn-outline-light rounded-circle me-1" href=""><i class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-square btn-outline-light rounded-circle me-1" href=""><i class="fab fa-youtube"></i></a>
-                            <a class="btn btn-square btn-outline-light rounded-circle me-0" href=""><i class="fab fa-linkedin-in"></i></a>
+
+<!-- Contact Start -->
+<div class="container-xxl py-6">
+    <div class="container">
+        <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+            <h1 class="display-5 mb-3">🌱 Get In Touch With Us</h1>
+            <p class="lead">Have questions about our market, vendors, or events? We'd love to hear from you!</p>
+        </div>
+        <div class="row g-5 justify-content-center">
+            <!-- Contact Info Card -->
+            <div class="col-lg-5 col-md-12 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="bg-success text-white d-flex flex-column justify-content-center h-100 p-5 rounded-4" style="background: linear-gradient(135deg, #689F38, #8BC34A); border-left: 8px solid #6D4C41;">
+                    <div class="d-flex align-items-center mb-4">
+                        <i class="fas fa-seedling fa-2x me-3"></i>
+                        <h3 class="text-white mb-0">Farmer's Market Info</h3>
+                    </div>
+                    
+                    <div class="contact-item d-flex mb-4">
+                        <i class="fas fa-phone-alt me-3 mt-1"></i>
+                        <div>
+                            <h5 class="text-white mb-1">Call Us</h5>
+                            <p class="mb-0">+1 (555) 123-4567</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item d-flex mb-4">
+                        <i class="fas fa-envelope me-3 mt-1"></i>
+                        <div>
+                            <h5 class="text-white mb-1">Email Us</h5>
+                            <p class="mb-0">hello@farmersmarket.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item d-flex mb-4">
+                        <i class="fas fa-map-marker-alt me-3 mt-1"></i>
+                        <div>
+                            <h5 class="text-white mb-1">Visit Us</h5>
+                            <p class="mb-0">123 Orchard Lane, Farmville, CA</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <h5 class="text-white mb-3">Follow Our Harvest</h5>
+                        <div class="d-flex">
+                            <a class="btn btn-square btn-outline-light rounded-circle me-2" href=""><i class="fab fa-facebook-f"></i></a>
+                            <a class="btn btn-square btn-outline-light rounded-circle me-2" href=""><i class="fab fa-instagram"></i></a>
+                            <a class="btn btn-square btn-outline-light rounded-circle me-2" href=""><i class="fab fa-twitter"></i></a>
+                            <a class="btn btn-square btn-outline-light rounded-circle" href=""><i class="fab fa-youtube"></i></a>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-7 col-md-12 wow fadeInUp" data-wow-delay="0.5s">
-                    {% if messages %}
-                        {% for message in messages %}
-                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-                                {{ message }}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div>
-                        {% endfor %}
-                    {% endif %}
-                    <form method="post" action="{% url 'contactus:contact' %}">
-                        {% csrf_token %}
-                        <div class="row g-3">
-                            <div class="col-md-6">
-                                <div class="form-floating">
-                                    {{ form.name }}
-                                    <label for="name">Your Name</label>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-floating">
-                                    {{ form.email }}
-                                    <label for="email">Your Email</label>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="form-floating">
-                                    {{ form.subject }}
-                                    <label for="subject">Subject</label>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="form-floating">
-                                    {{ form.message }}
-                                    <label for="message">Message</label>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <button class="btn btn-primary rounded-pill py-3 px-5" type="submit">Send Message</button>
+            </div>
+
+            <!-- Contact Form -->
+            <div class="col-lg-7 col-md-12 wow fadeInUp" data-wow-delay="0.5s">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                            <i class="fas fa-{% if message.tags == 'success' %}check-circle{% else %}exclamation-circle{% endif %} me-2"></i>
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                
+                <form method="post" action="{% url 'contactus:contact' %}" class="p-4 p-md-5 rounded-4" style="background-color: #f8f9fa; border: 1px solid #e9ecef;">
+                    <h3 class="mb-4 text-success"><i class="fas fa-envelope-open-text me-2"></i> Send Us a Message</h3>
+                    {% csrf_token %}
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                {{ form.name }}
+                                <label for="name"><i class="fas fa-user me-1"></i> Your Name</label>
                             </div>
                         </div>
-                    </form>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                {{ form.email }}
+                                <label for="email"><i class="fas fa-envelope me-1"></i> Your Email</label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-floating">
+                                <select class="form-select" id="subject" name="subject">
+                                    <option value="" selected disabled>Select a subject</option>
+                                    <option value="Vendor Inquiry">Vendor Inquiry</option>
+                                    <option value="Market Information">Market Information</option>
+                                    <option value="Event Participation">Event Participation</option>
+                                    <option value="Product Questions">Product Questions</option>
+                                    <option value="Feedback">Feedback</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                                <label for="subject"><i class="fas fa-tag me-1"></i> Subject</label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-floating">
+                                {{ form.message }}
+                                <label for="message"><i class="fas fa-comment me-1"></i> Your Message</label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button class="btn btn-success rounded-pill py-3 px-5" type="submit" style="background: linear-gradient(135deg, #689F38, #8BC34A); border: none;">
+                                <i class="fas fa-paper-plane me-2"></i> Send Message
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Contact End -->
+
+<!-- Market Location Section -->
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s">
+            <h2 class="display-5 mb-3">📍 Where to Find Our Farmers Market</h2>
+            <p class="lead">Visit us at our vibrant market location</p>
+        </div>
+        
+        <!-- Smart Market Map Section -->
+        <div class="wow fadeIn" data-wow-delay="0.1s">
+            <div class="position-relative rounded-4 overflow-hidden shadow-lg">
+                <div class="map-container">
+                    <iframe class="w-100" style="height: 500px; border: none;" 
+                        id="marketMap"
+                        src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3412.8807997907525!2d29.901641675598583!3d31.196318274364042!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMzHCsDExJzQ2LjgiTiAyOcKwNTQnMTUuMiJF!5e0!3m2!1sen!2seg!4v1747036926298!5m2!1sen!2seg"
+                        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    
+                    <!-- Smart Map Overlay -->
+                    <div class="map-overlay">
+                        <div class="market-info-card">
+                            <h3 class="text-success"><i class="fas fa-map-marked-alt me-2"></i> Market Location</h3>
+                            <p class="mb-3"><i class="fas fa-map-pin me-2"></i>Saad Zaghloul Street, next to Amir Cinema</p>
+                            <div class="market-hours">
+                                <h5><i class="far fa-clock me-2"></i>Opening Hours:</h5>
+                                <ul class="list-unstyled">
+                                    <li><span class="day">Saturday:</span> 8:00 AM - 3:00 PM</li>
+
+                                </ul>
+                            </div>
+                            <button class="btn btn-success w-100 mt-3" onclick="getDirections()">
+                                <i class="fas fa-directions me-2"></i>Get Directions
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Contact End -->
+</div>
 
-    <!-- Google Map Start -->
-    <div class="container-xxl px-0 wow fadeIn" data-wow-delay="0.1s" style="margin-bottom: -6px;">
-        <iframe class="w-100" style="height: 450px;"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3001156.4288297426!2d-78.01371936852176!3d42.72876761954724!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4ccc4bf0f123a5a9%3A0xddcfc6c1de189567!2sNew%20York%2C%20USA!5e0!3m2!1sen!2sbd!4v1603794290143!5m2!1sen!2sbd"
-            frameborder="0" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+<!-- Interactive Vendor Map Section -->
+<div class="container-xxl py-5" style="background: url('{% static 'images/wood-texture.jpg' %}') center/cover;">
+    <div class="container">
+        <div class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">
+            <h2 class="display-5 text-black">Farmers Market All Over The World 🌻</h2>
+            <p class="text-white-50 mb-0">Discover all the wonderful vendors at our farmer's market</p>
+        </div>
+        
+        <div class="row justify-content-center wow fadeInUp" data-wow-delay="0.3s">
+            <div class="col-lg-10">
+                <div class="position-relative rounded-4 overflow-hidden shadow-lg" style="background-color: rgba(255,255,255,0.9);">
+                    <img src="{% static 'images/cartoon-market-map.jpg' %}" alt="Farmer's Market Map" class="img-fluid w-100">
+                    
+                    <!-- Interactive Vendor Spots -->
+                    <div class="vendor-spot" style="top: 30%; left: 25%;" data-vendor="Organic Produce" data-category="produce">
+                        <div class="vendor-pin bg-success">
+                            <i class="fas fa-carrot"></i>
+                        </div>
+                        <div class="vendor-tooltip">
+                            <h6>Fresh Organic Produce</h6>
+                            <p>Seasonal fruits & vegetables</p>
+                            <small class="text-muted">Open until 3PM</small>
+                        </div>
+                    </div>
+                    <div class="vendor-spot" style="top: 45%; left: 60%;" data-vendor="Artisan Breads" data-category="bakery">
+                        <div class="vendor-pin bg-warning">
+                            <i class="fas fa-bread-slice"></i>
+                        </div>
+                        <div class="vendor-tooltip">
+                            <h6>Handcrafted Breads</h6>
+                            <p>Freshly baked daily</p>
+                            <small class="text-muted">Open until 2PM</small>
+                        </div>
+                    </div>
+                    <div class="vendor-spot" style="top: 65%; left: 40%;" data-vendor="Local Honey" data-category="dairy">
+                        <div class="vendor-pin bg-danger">
+                            <i class="fas fa-honey-pot"></i>
+                        </div>
+                        <div class="vendor-tooltip">
+                            <h6>Pure Local Honey</h6>
+                            <p>From our neighborhood bees</p>
+                            <small class="text-muted">Open until 3PM</small>
+                        </div>
+                    </div>
+                    
+                    <!-- Vendor Category Filter -->
+                    <div class="vendor-filter">
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-sm btn-success active" data-filter="all">All</button>
+                            <button type="button" class="btn btn-sm btn-success" data-filter="produce">North America</button>
+                            <button type="button" class="btn btn-sm btn-success" data-filter="bakery">Aisa</button>
+                            <button type="button" class="btn btn-sm btn-success" data-filter="dairy">Africa</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <!-- Google Map End -->
+</div>
+
+<style>
+    /* Contact Items */
+    .contact-item {
+        padding: 12px 15px;
+        background-color: rgba(255,255,255,0.1);
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+    .contact-item:hover {
+        background-color: rgba(255,255,255,0.2);
+        transform: translateX(5px);
+    }
+    
+    /* Enhanced Map Container */
+    .map-container {
+        position: relative;
+        height: 500px;
+        overflow: hidden;
+        border-radius: 12px;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    
+    .map-overlay {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 300px;
+        background: rgba(255,255,255,0.95);
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    
+    .market-info-card {
+        color: #333;
+    }
+    
+    .market-hours .day {
+        font-weight: 600;
+        color: #689F38;
+        display: inline-block;
+        width: 80px;
+    }
+    
+    /* Vendor Map Styles */
+    .vendor-spot {
+        position: absolute;
+        transform: translate(-50%, -50%);
+        cursor: pointer;
+        z-index: 10;
+        transition: all 0.3s ease;
+    }
+    
+    .vendor-pin {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        border: 2px solid white;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 14px;
+    }
+    
+    .vendor-tooltip {
+        position: absolute;
+        left: 50%;
+        bottom: calc(100% + 15px);
+        transform: translateX(-50%);
+        background: white;
+        padding: 12px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        width: 200px;
+        opacity: 0;
+        transition: all 0.3s ease;
+        pointer-events: none;
+    }
+    
+    .vendor-spot:hover .vendor-tooltip {
+        opacity: 1;
+        bottom: calc(100% + 20px);
+    }
+    
+    .vendor-tooltip h6 {
+        color: #689F38;
+        margin-bottom: 5px;
+    }
+    
+    .vendor-filter {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10;
+    }
+    
+    /* Form Select Styling */
+    .form-select {
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: right 0.75rem center;
+        background-size: 16px 12px;
+    }
+    
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+        .map-overlay {
+            position: relative;
+            width: auto;
+            top: 0;
+            right: 0;
+            border-radius: 0 0 12px 12px;
+        }
+        
+        .vendor-pin {
+            width: 24px;
+            height: 24px;
+            font-size: 12px;
+        }
+        
+        .vendor-tooltip {
+            width: 160px;
+        }
+    }
+</style>
+
+<script>
+    // Smart Map Features
+    function getDirections() {
+        if(navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                const lat = position.coords.latitude;
+                const lng = position.coords.longitude;
+                const url = `https://www.google.com/maps?q=31.1963183,29.9042166`;
+                window.open(url, '_blank');
+            });
+        } else {
+            window.open('https://www.google.com/maps?q=Union+Square+Greenmarket', '_blank');
+        }
+    }
+    
+    // Vendor filtering
+    document.addEventListener('DOMContentLoaded', function() {
+        const filterButtons = document.querySelectorAll('.vendor-filter button');
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const filter = this.getAttribute('data-filter');
+                
+                // Update active button
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Filter vendors
+                document.querySelectorAll('.vendor-spot').forEach(vendor => {
+                    if(filter === 'all' || vendor.getAttribute('data-category') === filter) {
+                        vendor.style.display = 'block';
+                    } else {
+                        vendor.style.display = 'none';
+                    }
+                });
+            });
+        });
+    });
+</script>
 
 {% endblock %}

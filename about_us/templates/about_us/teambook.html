@@ -1,0 +1,437 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meet Our Farmers</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/turn.js/3/turn.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    @keyframes bookFadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes bookSpin {
+      100% { transform: rotate(360deg); }
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      height: 100%;
+      background: url('https://www.transparenttextures.com/patterns/bedge-grunge.png'), linear-gradient(to bottom, #f5f5f5, #e8e2d6);
+      font-family: 'Roboto', sans-serif;
+    }
+
+    .container {
+      padding: 20px;
+      margin: 0 auto;
+      width: 100%;
+      box-sizing: border-box;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+
+    .page-curl {
+      background: linear-gradient(135deg, transparent 45%, rgba(255,255,255,0.6) 50%, transparent 55%);
+    }
+
+    .loading-spinner {
+      animation: bookSpin 1s linear infinite;
+      border-color: #689f38;
+      border-top-color: transparent;
+    }
+
+    #book {
+      animation: bookFadeIn 1.5s ease-in;
+      background: url('https://www.transparenttextures.com/patterns/cardboard-flat.png'), linear-gradient(to bottom right, #f5f5f5, #e0d8c3);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      margin: 20px auto;
+      width: 100%;
+      max-width: 900px;
+    }
+
+    .hard {
+      background: linear-gradient(to bottom right, #2f3e25, #4a8a2c);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hard::before {
+      content: '🌾';
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font-size: 3.5rem;
+      opacity: 0.3;
+      color: #fff;
+    }
+
+    .hard::after {
+      content: '🥕';
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      font-size: 3.5rem;
+      opacity: 0.3;
+      color: #fff;
+    }
+
+    .page {
+      background: #fffef0;
+      border: 1px solid #d4c9a8;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .text-page {
+      background: #fffef0;
+      position: relative;
+    }
+
+    .text-page::before {
+      content: '';
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      width: 50px;
+      height: 50px;
+      background: url('https://img.icons8.com/emoji/48/000000/ear-of-corn.png') no-repeat center;
+      background-size: contain;
+      opacity: 0.15;
+    }
+  </style>
+</head>
+<body class="min-h-screen">
+  <div class="container mx-auto">
+    <div class="book-wrapper">
+      <div id="book" class="relative shadow-2xl rounded-lg overflow-hidden">
+        <!-- Cover -->
+        <div class="hard">
+          <div class="flex flex-col items-center justify-center h-full p-8 space-y-6">
+            <h1 class="text-7xl font-bold text-white mb-4 text-center font-['Amatic_SC']">Meet Our<br>Team</h1>
+            <div class="w-32 h-1 bg-yellow-300"></div>
+            <p class="text-yellow-100 text-base mt-4 font-['Roboto']">Meet the heart of our market</p>
+          </div>
+        </div>
+
+          <div class="page">
+          <div class="h-full bg-cream-50 p-4">
+            <img src="{% static 'images/eman.png' %}" 
+                 class="w-full h-full object-cover rounded-lg shadow-lg" 
+                 alt="Hadeer Abdel Hamid">
+          </div>
+        </div>
+        <div class="page text-page">
+          <div class="p-8 h-full flex flex-col justify-center">
+            <h2 class="text-4xl font-bold text-green-800 mb-4 font-['Amatic_SC']">Dr Eman Seif</h2>
+            <p class="text-gray-700 leading-relaxed mb-4 font-['Roboto']">
+              <span class="initial-letter">C</span>reative and dedicated, Hadeer grows vibrant organic greens with love. 
+              Her passion for sustainable farming shines at our market every week.
+            </p>
+            <div class="mt-auto border-t-2 border-yellow-100 pt-4">
+              <p class="text-sm text-gray-600 font-['Roboto']">"Fresh soil, fresh soul."</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pages -->
+        <div class="page">
+          <div class="h-full bg-cream-50 p-4">
+            <img src="{% static 'images/hadeer.png' %}" 
+                 class="w-full h-full object-cover rounded-lg shadow-lg" 
+                 alt="Hadeer Abdel Hamid">
+          </div>
+        </div>
+        <div class="page text-page">
+          <div class="p-8 h-full flex flex-col justify-center">
+            <h2 class="text-4xl font-bold text-green-800 mb-4 font-['Amatic_SC']">Hadeer Abdel Hamid</h2>
+            <p class="text-gray-700 leading-relaxed mb-4 font-['Roboto']">
+              <span class="initial-letter">C</span>reative and dedicated, Hadeer grows vibrant organic greens with love. 
+              Her passion for sustainable farming shines at our market every week.
+            </p>
+            <div class="mt-auto border-t-2 border-yellow-100 pt-4">
+              <p class="text-sm text-gray-600 font-['Roboto']">"Fresh soil, fresh soul."</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="page">
+          <div class="h-full bg-cream-50 p-4">
+            <img src="{% static 'images/mahmoud.png' %}" 
+                 class="w-full h-full object-cover rounded-lg shadow-lg" 
+                 alt="Mahmoud Mohamed Naguib">
+          </div>
+        </div>
+        <div class="page text-page">
+          <div class="p-8 h-full flex flex-col justify-center">
+            <h2 class="text-4xl font-bold text-green-800 mb-4 font-['Amatic_SC']">Mahmoud Mohamed Naguib</h2>
+            <p class="text-gray-700 leading-relaxed mb-4 font-['Roboto']">
+              <span class="initial-letter">A</span> natural leader, Mahmoud’s heirloom tomatoes and leadership 
+              bring our community together at the market stall.
+            </p>
+            <div class="mt-auto border-t-2 border-yellow-100 pt-4">
+              <p class="text-sm text-gray-600 font-['Roboto']">"Harvest today, hope tomorrow."</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="page">
+          <div class="h-full bg-cream-50 p-4">
+            <img src="{% static 'images/lamia.png' %}" 
+                 class="w-full h-full object-cover rounded-lg shadow-lg" 
+                 alt="Lamiaa Hassan Ahmed Mahmoud">
+          </div>
+        </div>
+        <div class="page text-page">
+          <div class="p-8 h-full flex flex-col justify-center">
+            <h2 class="text-4xl font-bold text-green-800 mb-4 font-['Amatic_SC']">Lamiaa Hassan Ahmed Mahmoud</h2>
+            <p class="text-gray-700 leading-relaxed mb-4 font-['Roboto']">
+              <span class="initial-letter">D</span>edicated to organic herbs, Lamiaa’s careful tending 
+              ensures every basil leaf bursts with flavor.
+            </p>
+            <div class="mt-auto border-t-2 border-yellow-100 pt-4">
+              <p class="text-sm text-gray-600 font-['Roboto']">"From earth to table, with care."</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="page">
+          <div class="h-full bg-cream-50 p-4">
+            <img src="{% static 'images/ahmedmn3m.png' %}" 
+                 class="w-full h-full object-cover rounded-lg shadow-lg" 
+                 alt="Ahmed Abdel Monem El Sayed">
+          </div>
+        </div>
+        <div class="page text-page">
+          <div class="p-8 h-full flex flex-col justify-center">
+            <h2 class="text-4xl font-bold text-green-800 mb-4 font-['Amatic_SC']">Ahmed Abdel Monem El Sayed</h2>
+            <p class="text-gray-700 leading-relaxed mb-4 font-['Roboto']">
+              <span class="initial-letter">I</span>nnovative in sustainable practices, Ahmed’s root vegetables 
+              are a testament to his farming expertise.
+            </p>
+            <div class="mt-auto border-t-2 border-yellow-100 pt-4">
+              <p class="text-sm text-gray-600 font-['Roboto']">"Grow deep, love wide."</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="page">
+          <div class="h-full bg-cream-50 p-4">
+            <img src="{% static 'images/mohamedhesham.png' %}" 
+                 class="w-full h-full object-cover rounded-lg shadow-lg" 
+                 alt="Mohamed Hisham Mahmoud El Sayed">
+          </div>
+        </div>
+        <div class="page text-page">
+          <div class="p-8 h-full flex flex-col justify-center">
+            <h2 class="text-4xl font-bold text-green-800 mb-4 font-['Amatic_SC']">Mohamed Hisham Mahmoud El Sayed</h2>
+            <p class="text-gray-700 leading-relaxed mb-4 font-['Roboto']">
+              <span class="initial-letter">D</span>ynamic and hands-on, Mohamed’s fresh fruits 
+              bring sweetness to our market every season.
+            </p>
+            <div class="mt-auto border-t-2 border-yellow-100 pt-4">
+              <p class="text-sm text-gray-600 font-['Roboto']">"Plant dreams, harvest joy."</p>
+            </div>
+          </div>
+        </div>
+
+        
+
+        <!-- Back Cover -->
+        <div class="hard">
+          <div class="flex items-center justify-center h-full">
+            <p class="text-white text-center px-8 text-lg font-['Amatic_SC']">"Rooted in soil, growing community"</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Loading Overlay -->
+      <div id="loading" class="absolute inset-0 bg-cream-100 bg-opacity-90 flex items-center justify-center" style="z-index: 500;">
+        <div class="loading-spinner w-12 h-12 border-4 rounded-full"></div>
+      </div>
+
+      <!-- Controls -->
+      <div class="controls mt-6 flex justify-center space-x-6">
+        <button id="prev" class="book-btn">← Prev</button>
+        <button id="next" class="book-btn">Next →</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  $(document).ready(function() {
+    $('#loading').show();
+    const images = [
+      'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d',
+      'https://images.unsplash.com/photo-1534528741775-53994a69daeb',
+      'https://images.unsplash.com/photo-1517841905240-472988babdf9',
+      'https://images.unsplash.com/photo-1506794778202-6a3b8b862d8e',
+      'https://images.unsplash.com/photo-1522529599102-1a7a4c9d870a',
+      'https://images.unsplash.com/photo-1494790108377-be9c29b29330',
+      'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7'
+    ];
+
+    Promise.all(images.map(src => 
+      new Promise((resolve, reject) => {
+        const img = new Image();
+        img.src = src + '?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=500&q=80';
+        img.onload = resolve;
+        img.onerror = reject;
+      })
+    )).then(() => {
+      $('#loading').hide();
+      initBook();
+    }).catch(error => {
+      console.error('Error preloading images:', error);
+      $('#loading').hide();
+      initBook();
+    });
+
+    function initBook() {
+      if (typeof $.fn.turn === 'undefined') {
+        console.error('turn.js is not loaded');
+        return;
+      }
+
+      const bookContainer = $('.book-wrapper');
+      const containerWidth = bookContainer.width();
+      const bookWidth = Math.min(900, containerWidth);
+
+      $("#book").turn({
+        width: bookWidth,
+        height: 600,
+        autoCenter: true,
+        duration: 800,
+        acceleration: true,
+        gradients: false,
+        page: 1, // Changed to open on the cover page
+        when: {
+          turning: function(e, page) {
+            if (page > 1) {
+              $(this).addClass('page-curl');
+            }
+          },
+          turned: function(e, page) {
+            $(this).removeClass('page-curl');
+            updateButtonState();
+          }
+        }
+      }).bind('start', function() {
+        console.log('turn.js initialized successfully');
+      }).bind('missing', function() {
+        console.error('turn.js missing page content');
+      });
+
+      $(window).on('resize', debounce(() => {
+        const newContainerWidth = bookContainer.width();
+        const newBookWidth = Math.min(900, newContainerWidth);
+        $("#book").turn("size", newBookWidth, 600);
+      }, 250));
+
+      const navigation = {
+        prev: () => $("#book").turn("previous"),
+        next: () => $("#book").turn("next")
+      };
+
+      $('#prev, #next').on('click', function() {
+        if (!$(this).prop('disabled')) navigation[this.id]();
+      });
+
+      // Ensure buttons are updated on initial load
+      updateButtonState();
+    }
+
+    function updateButtonState() {
+      const page = $("#book").turn("page");
+      $('#prev').prop('disabled', page <= 1);
+      $('#next').prop('disabled', page >= $("#book").turn("pages"));
+    }
+
+    function debounce(func, wait) {
+      let timeout;
+      return (...args) => {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(this, args), wait);
+      };
+    }
+  });
+  </script>
+
+  <style>
+    .book-btn {
+      @apply px-8 py-4 bg-green-600 text-white rounded-full 
+             transition-all duration-300 hover:bg-green-700 
+             hover:shadow-xl transform hover:-translate-y-1 
+             disabled:opacity-50 disabled:hover:translate-y-0 
+             disabled:hover:shadow-none font-['Roboto'] text-lg;
+    }
+
+    .initial-letter::first-letter {
+      @apply text-5xl font-bold text-yellow-600 mr-2 float-left font-['Amatic_SC'];
+    }
+
+    #book .page::after {
+      content: '';
+      @apply absolute inset-0 border border-yellow-200 pointer-events-none;
+    }
+
+    .book-wrapper {
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto 20px auto;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 10px;
+      }
+
+      #book {
+        margin: 10px auto;
+      }
+
+      .controls {
+        margin-top: 20px;
+      }
+
+      .book-wrapper {
+        margin-bottom: 10px;
+      }
+
+      .book-btn {
+        @apply px-6 py-3 text-base;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 10px;
+      }
+
+      #book {
+        margin: 10px auto;
+      }
+
+      .controls {
+        margin-top: 10px;
+      }
+
+      .book-wrapper {
+        margin-bottom: 10px;
+      }
+
+      .book-btn {
+        @apply px-4 py-2 text-sm;
+      }
+    }
+  </style>
+</body>
+</html>
