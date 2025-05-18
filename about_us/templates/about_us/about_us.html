@@ -1,5 +1,5 @@
 {% extends 'blogs/base.html' %}
-
+{% load static %}
 {% block content %}
 <!DOCTYPE html>
 <html lang="en">
@@ -20,7 +20,6 @@
       color: rgb(28, 120, 63);
       font-size: 3em;
       font-weight: bold;
-      font-family: 'Georgia', serif;
       margin-bottom: 50px;
     }
 
@@ -63,18 +62,18 @@
       margin-right: 10px;
     }
 
-    .leaf:nth-child(1) { left: 0; }
+    .leaf:nth-child(1) { left: 30%; }
     .leaf:nth-child(2) {
-    left: 28%;
+    left: 35%;
     top: 30px;
     background: #aed581;
 }
 
     .leaf:nth-child(3) {
-      left: 55%;
+      left: 70%;
   }
     .leaf:nth-child(4) {
-    left: 83%;
+    left: 30%;
     top: 20px;
     background: #dcedc8;
 }
@@ -86,7 +85,8 @@
 
     .leaf p {
       margin: 0;
-      font-size: 0.9em;
+      font-size: .8em;
+      font-weight: bold;
     }
 
     /* Mission & Vision Sections */
@@ -266,7 +266,6 @@
       max-width: 1000px;
       margin: 30px auto;
       text-align: center;
-      padding: 50px;
     }
     
     .video-container {
@@ -289,9 +288,9 @@
     
     .video-title {
       font-size: 3em;
+      font-weight: bold;
       margin-bottom: 20px;
       color: rgb(28, 120, 63);
-      font-family: 'Georgia', serif;
       margin-bottom: 30px;
       margin-top: 50px;
     }
@@ -308,30 +307,30 @@
     <h2 class="video-title">Our Market in Action</h2>
     <div class="video-container">
       <!-- Replace with your actual video embed code -->
-      <iframe src="https://www.youtube.com/embed/9xwazD5SyVg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <iframe src="{% static 'images/Market In action.mp4'%}" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
   </div>
 
   <div class="timeline-container">
     <header>🌾 Our Story</header>
     <div class="leaf">
-      <h3>2017 - Roots</h3>
-      <p>We started with a small garden and big dreams.</p>
+      <h3>14/11 - 2024</h3>
+      <p>We moved to the new place on where we organize the market till now at Saad Zaghloul Street, next to Amir Cinema </p>
     </div>
 
     <div class="leaf">
-      <h3>2018 - Sprout</h3>
-      <p>Opened our first farmers market booth with fresh veggies.</p>
+      <h3>2025</h3>
+      <p>The volume of quantities sold by farmers is now about 300 to 400 kg per farmer  per week.
+ farmers' income increased by approximately 10%.
+</p>
+    </div>
+
+    <div class="">
     </div>
 
     <div class="leaf">
-      <h3>2020 - Branching Out</h3>
-      <p>Added handmade goods and local honey to our stalls.</p>
-    </div>
-
-    <div class="leaf">
-      <h3>2023 - Harvest</h3>
-      <p>Now a thriving local market with over 50 farmers!</p>
+      <h3>26/10 - 2024</h3>
+      <p>Our beginning was at Saad Zaghloul square on 26-october-2024 where we organized the market for 2 days.</p>
     </div>
   </div>
   <div class="section-spacer"></div>

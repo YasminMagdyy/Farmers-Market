@@ -277,14 +277,32 @@ section {
     padding: 0 50px;
 }
 
+/* Services Section */
 .services-container {
     display: flex;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    width: 100%;
+    gap: 0;
+}
+
+.service-pair {
+    display: flex;
+    width: 100%;
+    min-width: 100%;
     gap: 30px;
-    padding: 30px 0;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
+    padding: 0 15px;
+    box-sizing: border-box;
+}
+
+.service-card {
+    flex: 1;
+    min-width: calc(50% - 15px);
+    /* Keep your existing card styles */
+}
+/* Hide scroll buttons if not needed */
+.scroll-btn {
+    display: none;
 }
 
 .services-container::-webkit-scrollbar {
@@ -292,8 +310,9 @@ section {
 }
 
 .service-card {
-    flex: 0 0 calc(33.333% - 20px);
+    flex: 0 0 calc(50% - 15px); /* Show two cards at a time */
     scroll-snap-align: start;
+    min-width: calc(50% - 15px); /* Ensure consistent width */
     background: white;
     padding: 40px 30px;
     border-radius: 16px;
@@ -395,6 +414,27 @@ section {
 
 .scroll-btn.right {
     right: 0;
+}
+
+.service-indicators {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #ddd;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.indicator.active {
+    background: var(--primary-color);
+    transform: scale(1.2);
 }
 
 /* Background Shapes */
