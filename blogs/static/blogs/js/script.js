@@ -138,3 +138,104 @@ document.addEventListener('DOMContentLoaded', () => {
     // Update active tab on popstate (browser back/forward)
     window.addEventListener('popstate', setActiveTab);
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    const slider = document.getElementById("servicesSlider");
+    const scrollAmount = slider.offsetWidth / 2;
+
+    let autoScroll = setInterval(() => {
+        slider.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        if (slider.scrollLeft + slider.offsetWidth >= slider.scrollWidth) {
+            setTimeout(() => {
+                slider.scrollTo({ left: 0, behavior: 'smooth' });
+            }, 1000);
+        }
+    }, 3000);
+
+    document.querySelector(".scroll-btn.left").addEventListener("click", () => {
+        slider.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+        resetAutoScroll();
+    });
+
+    document.querySelector(".scroll-btn.right").addEventListener("click", () => {
+        slider.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        resetAutoScroll();
+    });
+
+    function resetAutoScroll() {
+        clearInterval(autoScroll);
+        autoScroll = setInterval(() => {
+            slider.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+            if (slider.scrollLeft + slider.offsetWidth >= slider.scrollWidth) {
+                setTimeout(() => {
+                    slider.scrollTo({ left: 0, behavior: 'smooth' });
+                }, 1000);
+            }
+        }, 3000);
+    }
+});
+document.getElementById('notify-btn').addEventListener('click', function() {
+    fetch('{% url "toggle_notify" %}', {
+      method: 'POST',
+      headers: {
+        'X-CSRFToken': '{{ csrf_token }}',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({})
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        this.querySelector('i').classList.toggle('text-primary');
+        alert(data.notify ? 'تم تفعيل الإشعارات' : 'تم إيقاف الإشعارات');
+      }
+    });
+  });
+
+document.addEventListener('DOMContentLoaded', function() {
+    const slider = document.getElementById('servicesSlider');
+    const pairs = document.querySelectorAll('.service-pair');
+    let currentPair = 0;
+    const scrollInterval = 5000; // 5 seconds
+    
+    function scrollToPair(index) {
+        currentPair = index;
+        slider.scrollTo({
+            left: slider.offsetWidth * index,
+            behavior: 'smooth'
+        });
+    }
+    
+    function autoScroll() {
+        const nextPair = (currentPair + 1) % pairs.length;
+        scrollToPair(nextPair);
+    }
+    
+    // Start auto-scrolling
+    let scrollTimer = setInterval(autoScroll, scrollInterval);
+    
+    // Pause on hover
+    slider.addEventListener('mouseenter', () => clearInterval(scrollTimer));
+    slider.addEventListener('mouseleave', () => {
+        scrollTimer = setInterval(autoScroll, scrollInterval);
+    });
+    
+    // Optional: Add navigation indicators
+    const indicators = document.createElement('div');
+    indicators.className = 'service-indicators';
+    pairs.forEach((_, i) => {
+        const dot = document.createElement('span');
+        dot.className = `indicator ${i === 0 ? 'active' : ''}`;
+        dot.addEventListener('click', () => scrollToPair(i));
+        indicators.appendChild(dot);
+    });
+    slider.parentNode.appendChild(indicators);
+    
+    // Update indicators on scroll
+    slider.addEventListener('scroll', () => {
+        const pairIndex = Math.round(slider.scrollLeft / slider.offsetWidth);
+        document.querySelectorAll('.indicator').forEach((dot, i) => {
+            dot.classList.toggle('active', i === pairIndex);
+        });
+    });
+});
