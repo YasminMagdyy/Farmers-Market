@@ -287,6 +287,7 @@
     transition: transform 0.3s;
     padding: 10px;
     align-self: center;
+    user-select: none;
   }
 
   .content-display {
@@ -335,69 +336,255 @@
   .photo-album-iframe-container {
     margin: 0;
     width: 100%;
-    padding: 50px 0 20px 0; /* Reduced bottom padding to minimize space below iframe */
+    padding: 50px 0 20px 0;
     box-sizing: border-box;
     background: #f7f7f7;
   }
 
   .photo-album-iframe {
     width: 100%;
-    height: 772px; /* Updated to match new content height: 600px (book) + 40px (book margins) + 48px (controls) + 24px (controls margin) + 40px (container padding) + 20px (book-wrapper margin-bottom) */
+    min-height: 852px; /* Base height to fit header (~80px), book (600px), book margins (40px), controls (~48px), controls margin (24px), book-wrapper margin (20px), container padding (40px) */
     max-width: none;
     border: none;
     display: block;
-    overflow: hidden;
+    overflow: hidden; /* Prevent scrollbars unless necessary */
   }
 
   /* Responsive Adjustments */
+  @media (max-width: 1024px) {
+    .carousel-container {
+      grid-template-columns: 30px 1fr 400px 30px;
+      gap: 20px;
+    }
+
+    .card {
+      width: 250px;
+      height: 320px;
+    }
+
+    .card-image {
+      height: 250px;
+    }
+
+    .content-display {
+      height: 320px;
+      padding: 20px;
+    }
+
+    .photo-album-iframe {
+      min-height: 700px; /* Adjusted for slightly smaller book height */
+    }
+  }
+
   @media (max-width: 768px) {
+    .farmers-section {
+      padding: 30px 0;
+    }
+
+    .farmers-section .section-header h2 {
+      font-size: 1.8rem;
+    }
+
+    .farmers-section .section-header p {
+      font-size: 1rem;
+    }
+
     .farmers-grid {
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr;
       gap: 30px;
+      padding: 0 20px;
+    }
+
+    .farmer-card {
+      width: 90%;
+      margin: 0 auto;
     }
 
     .farmer-modal-inner {
       flex-direction: column;
+      background: rgba(0, 0, 0, 0.7);
     }
 
     .farmer-modal-image {
-      min-height: 300px;
+      min-height: 200px;
+      height: 40vh;
       border-radius: 12px 12px 0 0;
-    }
-
-    .farmer-modal-text {
-      border-radius: 0 0 12px 12px;
-    }
-
-    .photo-album-iframe {
-      height: 620px; /* Adjusted for smaller content height on tablets */
-    }
-  }
-
-  @media (max-width: 480px) {
-    .farmers-grid {
-      grid-template-columns: 1fr;
-      gap: 40px;
+      background-size: contain;
+      background-color: rgba(0,0,0,0.5);
     }
 
     .farmer-modal-text {
       padding: 20px;
+      border-radius: 0 0 12px 12px;
+      background: rgba(0, 0, 0, 0.8);
     }
 
-    .farmer-modal-text h2 {
+    .carousel-section {
+      margin: 50px auto;
+      padding: 20px 0;
+    }
+
+    .carousel-title {
+      font-size: 2.2em;
+      margin-bottom: 30px;
+    }
+
+    .carousel-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .nav-arrow {
+      position: static;
+      align-self: center;
+    }
+
+    .cards-wrapper {
+      position: relative;
+      height: 385px;
+      width: 100%;
+      overflow-x: scroll;
+      -webkit-overflow-scrolling: touch;
+      scroll-snap-type: x mandatory;
+      display: flex;
+      justify-content: flex-start;
+      gap: 15px;
+      padding: 0 20px;
+      box-sizing: border-box;
+    }
+
+    .card {
+      position: static;
+      flex-shrink: 0;
+      width: 280px;
+      height: 350px;
+      transform: none !important;
+      border-radius: 15px;
+      scroll-snap-align: center;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    .card.active {
+      transform: none !important;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+
+    .card-image {
+      height: 230px;
+    }
+
+    .content-display {
+      height: auto;
+      width: 90%;
+      padding: 20px;
+      margin-top: 20px;
+    }
+
+    .carousel-title { order: 1; }
+    .carousel-arrows-wrapper { order: 2; display: flex; width: 100%; justify-content: space-between; padding: 0 20px; box-sizing: border-box; }
+    .nav-arrow { padding: 10px 20px; }
+    .cards-wrapper { order: 3; }
+    .content-display { order: 4; }
+
+    .photo-album-iframe {
+      min-height: 650px; /* Adjusted for smaller book size and reduced header size */
+    }
+  }
+
+  @media (max-width: 480px) {
+    .farmers-section {
+      padding: 20px 0;
+    }
+
+    .farmers-section .section-header h2 {
       font-size: 1.5rem;
     }
 
+    .farmers-section .section-header p {
+      font-size: 0.9rem;
+    }
+
+    .farmers-grid {
+      gap: 20px;
+      padding: 0 15px;
+    }
+
+    .farmer-card {
+      width: 95%;
+    }
+
+    .farmer-img {
+      height: 220px;
+    }
+
+    .farmer-info h3 {
+      font-size: 1.1rem;
+    }
+
+    .specialty {
+      font-size: 0.9rem;
+    }
+
+    .carousel-title {
+      font-size: 1.8em;
+      margin-bottom: 20px;
+    }
+
+    .carousel-container {
+      gap: 15px;
+    }
+
+    .nav-arrow {
+      font-size: 1.2em;
+      padding: 5px 15px;
+    }
+
+    .cards-wrapper {
+      padding: 0 15px;
+    }
+
+    .card {
+      width: 250px;
+      height: 320px;
+    }
+
+    .card-image {
+      height: 200px;
+    }
+
+    .content-title {
+      font-size: 1.2rem;
+    }
+
+    .content-text {
+      font-size: 0.9rem;
+    }
+
+    .content-tags {
+      font-size: 0.8rem;
+    }
+
+    .farmer-modal-image {
+      min-height: 180px;
+      height: 30vh;
+    }
+
+    .farmer-modal-text h2 {
+      font-size: 1.3rem;
+    }
+
     .modal-specialty {
-      font-size: 1rem;
+      font-size: 0.9rem;
     }
 
     .farmer-modal-text p {
-      font-size: 1rem;
+      font-size: 0.9rem;
     }
 
     .photo-album-iframe {
-      height: 520px; /* Adjusted for smaller content height on mobile */
+      min-height: 600px; /* Adjusted for smallest screens */
     }
   }
 </style>
@@ -406,7 +593,10 @@
   <h2 class="carousel-title">From Soil to Soul</h2>
   
   <div class="carousel-container">
-    <div class="nav-arrow left-arrow">❮</div>
+    <div class="carousel-arrows-wrapper">
+        <div class="nav-arrow left-arrow">❮</div>
+        <div class="nav-arrow right-arrow">❯</div>
+    </div>
     
     <div class="cards-wrapper">
       <div class="card active" data-content="<h3 class='content-title'>Feel the Farm Spirit!</h3><p class='content-text'>Bask in the sunlit bustle of the market, where the air hums with laughter and the scent of fresh earth. Connect with growers sharing their harvest’s heart—every Saturday, it’s a celebration of community! 🌾 <br><span class='content-tags'>#MarketVibes #CommunityLove</span></p>">
@@ -421,11 +611,9 @@
     </div>
     
     <div class="content-display" id="card-content"></div>
-    <div class="nav-arrow right-arrow">❯</div>
   </div>
 </div>
 
-<!-- Farmers Showcase Section -->
 <div class="farmers-section">
   <div class="container">
     <div class="section-header">
@@ -434,8 +622,7 @@
     </div>
     
     <div class="farmers-grid">
-      <!-- Farmer 1 -->
-      <div class="farmer-card" onclick="openFarmerModal('Ali Kamal Ali', 'Butcher', '', 'Ali Kamal Ali , widely known as Taha the Butcher He has been with us since the very beginning of our journey.Mr. Taha is one of the farmers who started with a small quantity and a limited variety of products. Over time, he has expanded his offerings significantly due to the high demand for his meat products.Mr. Taha often remarks that he never imagined the market would boost his business to this extent, which motivates him to increase his products every week.', '{% get_static_prefix %}images/farmer1.jpg', 'Butcher')">
+      <div class="farmer-card" onclick="openFarmerModal('Ali Kamal Ali', 'Butcher', '', 'Ali Kamal Ali , widely known as Taha the Butcher He has been with us since the very beginning of our journey.Mr. Taha is one of the farmers who started with a small quantity and a limited variety of products. Over time, he has expanded his offerings significantly due to the high demand for his meat products.Mr. Taha often remarks that he never imagined the market would boost his business to this extent, which motivates him to increase his products every week.', '{% get_static_prefix %}images/farmer1.jpg', 'Butcher')">
         <div class="farmer-badge">Butcher</div>
         <div class="farmer-img" style="background-image: url('{% static 'images/farmer1.jpg' %}')"></div>
         <div class="farmer-info">
@@ -447,8 +634,7 @@
         </div>
       </div>
       
-      <!-- Farmer 2 -->
-      <div class="farmer-card" onclick="openFarmerModal('Engineer Nadia Noah ', '', '', 'She joined our Farmers\' Market because it\'s more than just a typical market.We prioritize community benefit in all aspects, including education and knowledge sharing. Eng. Nadia specializes in organic fertilizers and their production from vegetable waste.She also provides valuable lectures at the market on fertilizers, seeds, and farming techniques, aiming to maximize the benefits for our visitors. Eng.Nadia expressed her great pleasure in being part of the Farmers\' Market, as it has provided her with a significant opportunity to showcase her work to a wider audience and share agricultural knowledge with both children and adults.Eng. Nadia Noah started with us in week 16 and continues to be an integral part of our market as we grow and evolve to better serve you.', '{% get_static_prefix %}images/farmer2.jpg', 'Plants')">
+      <div class="farmer-card" onclick="openFarmerModal('Engineer Nadia Noah ', '', '', 'She joined our Farmers\' Market because it\'s more than just a typical market.We prioritize community benefit in all aspects, including education and knowledge sharing. Eng. Nadia specializes in organic fertilizers and their production from vegetable waste.She also provides valuable lectures at the market on fertilizers, seeds, and farming techniques, aiming to maximize the benefits for our visitors. Eng.Nadia expressed her great pleasure in being part of the Farmers\' Market, as it has provided her with a significant opportunity to showcase her work to a wider audience and share agricultural knowledge with both children and adults.Eng. Nadia Noah started with us in week 16 and continues to be an integral part of our market as we grow and evolve to better serve you.', '{% get_static_prefix %}images/farmer2.jpg', 'Plants')">
         <div class="farmer-badge">Plants</div>
         <div class="farmer-img" style="background-image: url('{% static 'images/farmer2.jpg' %}')"></div>
         <div class="farmer-info">
@@ -460,8 +646,7 @@
         </div>
       </div>
       
-      <!-- Farmer 3 -->
-      <div class="farmer-card" onclick="openFarmerModal('Rawda and Hosna', '', '', 'Rawda Zeidan and Hosna Zeidan They have been with us since the start and have become well-known at the market for their delicious homemade dairy products and traditional baked goods. Rawda and Hosna embody the spirit of the authentic Egyptian woman who works hard and perseveres. The Farmers\' Market marked a new beginning and opened a new door of opportunity for them.', '{% get_static_prefix %}images/farmer3.jpg', 'Dairy and Bakery Product')">
+      <div class="farmer-card" onclick="openFarmerModal('Rawda and Hosna', '', '', 'Rawda Zeidan and Hosna Zeidan They have been with us since the start and have become well-known at the market for their delicious homemade dairy products and traditional baked goods. Rawda and Hosna embody the spirit of the authentic Egyptian woman who works hard and perseveres. The Farmers\' Market marked a new beginning and opened a new door of opportunity for them.', '{% get_static_prefix %}images/farmer3.jpg', 'Dairy and Bakery Product')">
         <div class="farmer-badge">Rawda Zeidan and Hosna Zeidan</div>
         <div class="farmer-img" style="background-image: url('{% static 'images/farmer3.jpg' %}')"></div>
         <div class="farmer-info">
@@ -473,8 +658,7 @@
         </div>
       </div>
       
-      <!-- Farmer 4 -->
-      <div class="farmer-card" onclick="openFarmerModal('Ayman El-Hassawy', '', '', 'He is a prominent farmer in the Farmers\' Market and the Abis area. He is well-known in the market for his fresh, high-quality vegetables. Ayman has been with us since the first week and continues to be a regular participant. Following the significant success he has experienced through the market, Mr.Ayman has also started bringing his children along to help him.', '{% get_static_prefix %}images/f2-removebg-preview.png', 'Vegetables')">
+      <div class="farmer-card" onclick="openFarmerModal('Ayman El-Hassawy', '', '', 'He is a prominent farmer in the Farmers\' Market and the Abis area. He is well-known in the market for his fresh, high-quality vegetables. Ayman has been with us since the first week and continues to be a regular participant. Following the significant success he has experienced through the market, Mr.Ayman has also started bringing his children along to help him.', '{% get_static_prefix %}images/f2-removebg-preview.png', 'Vegetables')">
         <div class="farmer-badge">Pasture Raised</div>
         <div class="farmer-img" style="background-image: url('{% static 'images/f2-removebg-preview.png' %}')"></div>
         <div class="farmer-info">
@@ -485,18 +669,10 @@
           </div>
         </div>
       </div>
-      
-      
-      
-  
-      
-      <!-- Farmer 8 -->
-    
     </div>
   </div>
 </div>
 
-<!-- Farmer Modal -->
 <div id="farmerModal" class="farmer-modal">
   <div class="farmer-modal-content">
     <span class="farmer-modal-close">×</span>
@@ -512,7 +688,6 @@
   </div>
 </div>
 
-<!-- Photo Album Iframe -->
 <div class="photo-album-iframe-container">
   <iframe src="/about-us/teambook/" class="photo-album-iframe" title="Interactive Photo Album"></iframe>
 </div>
@@ -522,40 +697,85 @@
   document.addEventListener('DOMContentLoaded', () => {
     const cards = Array.from(document.querySelectorAll('.card'));
     const contentDisplay = document.getElementById('card-content');
+    const cardsWrapper = document.querySelector('.cards-wrapper');
     const leftArrow = document.querySelector('.left-arrow');
     const rightArrow = document.querySelector('.right-arrow');
     
-    function rotateStack(direction) {
-      const activeCard = cards.find(card => card.classList.contains('active'));
-      
-      if(direction === 'next') {
-        cards.push(cards.shift());
+    let currentIndex = 0;
+
+    function updateCarousel() {
+      if (window.innerWidth <= 768) {
+        cards.forEach((card, i) => {
+          card.classList.remove('active');
+          if (i === currentIndex) {
+            card.classList.add('active');
+          }
+        });
+        cardsWrapper.scrollTo({
+          left: cards[currentIndex].offsetLeft - (cardsWrapper.offsetWidth / 2) + (cards[currentIndex].offsetWidth / 2),
+          behavior: 'smooth'
+        });
       } else {
-        cards.unshift(cards.pop());
+        cards.forEach((card, index) => {
+          card.classList.remove('active');
+          card.style.zIndex = 4 - index;
+          card.style.transform = `
+            translateX(${index * 15}%)
+            rotate(${index % 2 === 0 ? -3 : 3}deg)
+          `;
+          
+          if(index === 0) {
+            card.classList.add('active');
+            card.style.transform = 'translateX(0%) rotate(0deg) scale(1.05)';
+            card.style.zIndex = 5;
+          }
+        });
       }
-      
-      cards.forEach((card, index) => {
-        card.classList.remove('active');
-        card.style.zIndex = 4 - index;
-        card.style.transform = `
-          translateX(${index * 15}%)
-          rotate(${index % 2 === 0 ? -3 : 3}deg)
-        `;
-        
-        if(index === 0) {
-          card.classList.add('active');
-          card.style.transform = 'translateX(0%) rotate(0deg) scale(1.05)';
-          card.style.zIndex = 5;
-        }
-      });
-      
       contentDisplay.innerHTML = cards[0].dataset.content;
     }
 
-    rightArrow.addEventListener('click', () => rotateStack('next'));
-    leftArrow.addEventListener('click', () => rotateStack('prev'));
+    function navigateCarousel(direction) {
+      if (window.innerWidth <= 768) {
+        if (direction === 'next') {
+          currentIndex = (currentIndex + 1) % cards.length;
+        } else {
+          currentIndex = (currentIndex - 1 + cards.length) % cards.length;
+        }
+        updateCarousel();
+      } else {
+        if(direction === 'next') {
+          cards.push(cards.shift());
+        } else {
+          cards.unshift(cards.pop());
+        }
+        updateCarousel();
+      }
+    }
+
+    rightArrow.addEventListener('click', () => navigateCarousel('next'));
+    leftArrow.addEventListener('click', () => navigateCarousel('prev'));
     
-    contentDisplay.innerHTML = cards[0].dataset.content;
+    updateCarousel();
+
+    window.addEventListener('resize', updateCarousel);
+
+    cardsWrapper.addEventListener('scroll', () => {
+        if (window.innerWidth <= 768) {
+            clearTimeout(cardsWrapper.scrollTimeout);
+            cardsWrapper.scrollTimeout = setTimeout(() => {
+                const center = cardsWrapper.scrollLeft + cardsWrapper.offsetWidth / 2;
+                let newIndex = 0;
+                cards.forEach((card, index) => {
+                    if (center >= card.offsetLeft && center <= card.offsetLeft + card.offsetWidth) {
+                        newIndex = index;
+                    }
+                });
+                if (newIndex !== currentIndex) {
+                    currentIndex = newIndex;
+                }
+            }, 100);
+        }
+    });
   });
 
   // Farmer Modal Script
@@ -568,19 +788,16 @@
     document.getElementById('farmerModal').style.display = 'flex';
   }
 
-  // Close modal when clicking the close button
   document.querySelector('.farmer-modal-close').addEventListener('click', () => {
     document.getElementById('farmerModal').style.display = 'none';
   });
 
-  // Close modal when clicking outside the modal content
   document.getElementById('farmerModal').addEventListener('click', (e) => {
     if (e.target === document.getElementById('farmerModal')) {
       document.getElementById('farmerModal').style.display = 'none';
     }
   });
 
-  // Close modal with Escape key
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && document.getElementById('farmerModal').style.display === 'flex') {
       document.getElementById('farmerModal').style.display = 'none';

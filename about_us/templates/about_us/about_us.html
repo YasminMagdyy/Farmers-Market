@@ -5,7 +5,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Our Story - Farmer's Market</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Our Story - Farmer's Market</title>
   <style>
 
     body {
@@ -39,18 +39,17 @@
     }
 
     .leaf {
-    position: absolute;
-    top: -20px;
-    width: 250px;
-    padding: 20px 20px 20px;
-    background: #c5e1a5;
-    border-radius: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transform: rotate(-3deg);
-    transition: transform 0.3s;
-    margin-top: 150px;
-
-}
+      position: absolute;
+      top: -20px;
+      width: 250px;
+      padding: 20px;
+      background: #c5e1a5;
+      border-radius: 20px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transform: rotate(-3deg);
+      transition: transform 0.3s;
+      margin-top: 150px;
+    }
 
     .leaf:hover {
       transform: scale(1.05);
@@ -64,19 +63,19 @@
 
     .leaf:nth-child(1) { left: 30%; }
     .leaf:nth-child(2) {
-    left: 35%;
-    top: 30px;
-    background: #aed581;
-}
+      left: 35%;
+      top: 30px;
+      background: #aed581;
+    }
 
     .leaf:nth-child(3) {
       left: 70%;
-  }
+    }
     .leaf:nth-child(4) {
-    left: 30%;
-    top: 20px;
-    background: #dcedc8;
-}
+      left: 30%;
+      top: 20px;
+      background: #dcedc8;
+    }
 
     .leaf h3 {
       margin: 0 0 5px;
@@ -91,14 +90,14 @@
 
     /* Mission & Vision Sections */
     .mv-container {
-    width: 90%;
-    max-width: 1000px;
-    margin: 100px auto;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 30px;
-}
+      width: 90%;
+      max-width: 1000px;
+      margin: 100px auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 30px;
+    }
 
     .mission, .vision {
       flex: 1;
@@ -227,8 +226,6 @@
       color: #c8e6c9;
     }
     
-
-    
     .founders {
       margin-bottom: 60px;
     }
@@ -250,7 +247,6 @@
     .members .avatar {
       border-color: #aed581;
     }
-
 
     /* Spacer between roadmap and mission/vision */
     .section-spacer {
@@ -295,18 +291,107 @@
       margin-top: 50px;
     }
     
- 
+    /* --- Mobile Styles --- */
+    @media (max-width: 768px) { /* Applies to screens 768px and smaller */
+      header {
+        font-size: 2em; /* Smaller font size for mobile header */
+        margin-bottom: 30px;
+      }
+
+      .timeline-container {
+        margin: 50px auto; /* Adjust margin for mobile */
+        padding: 0 20px; /* Add some padding to the sides */
+      }
+
+      .leaf {
+        position: static; /* Remove absolute positioning */
+        width: 90%; /* Make leaves take up more width */
+        margin: 0 auto 30px auto; /* Center and add vertical spacing */
+        transform: none; /* Remove rotation */
+        top: auto; /* Reset top property */
+        left: auto; /* Reset left property */
+        margin-top: 0; /* Reset margin-top */
+      }
+
+      .leaf:hover {
+        transform: none; /* Disable hover scale on mobile for consistency */
+      }
+
+      /* Reset specific leaf positions for mobile */
+      .leaf:nth-child(1),
+      .leaf:nth-child(2),
+      .leaf:nth-child(3),
+      .leaf:nth-child(4) {
+        left: auto;
+        top: auto;
+        background: #c5e1a5; /* Reset background to default for all leaves on mobile */
+      }
+      .leaf:nth-child(2) {
+        background: #aed581; /* Keep distinct background for the second leaf if desired */
+      }
+      .leaf:nth-child(4) {
+        background: #dcedc8; /* Keep distinct background for the fourth leaf if desired */
+      }
+
+
+      .mv-container {
+        flex-direction: column; /* Stack mission and vision vertically */
+        gap: 20px; /* Adjust gap for mobile */
+        margin: 50px auto;
+        padding: 0 20px;
+      }
+
+      .mission, .vision {
+        min-width: unset; /* Remove min-width to allow full flexibility */
+        padding: 20px; /* Adjust padding */
+      }
+
+      .video-title {
+        font-size: 2em; /* Smaller video title for mobile */
+        margin-top: 30px;
+        margin-bottom: 20px;
+      }
+
+      .team-tree {
+        padding: 0 10px; /* Add padding for team section on mobile */
+      }
+
+      .tree-level {
+        flex-direction: column; /* Stack team members vertically */
+        align-items: center; /* Center team members */
+        margin-bottom: 20px; /* Adjust margin for team levels */
+      }
+
+      .person {
+        margin: 15px 0; /* Adjust margin for individual team members */
+      }
+
+      .avatar {
+        width: 80px; /* Smaller avatars on mobile */
+        height: 80px;
+        font-size: 2em; /* Adjust icon size in avatar */
+      }
+
+      .founders .avatar {
+        width: 100px; /* Slightly larger for founders on mobile */
+        height: 100px;
+      }
+
+      .name {
+        font-size: 0.9em;
+      }
+
+      .role {
+        font-size: 0.7em;
+      }
+    }
   </style>
 </head>
 <body>
 
-  
-
-  <!-- Video Section -->
   <div class="video-section">
     <h2 class="video-title">Our Market in Action</h2>
     <div class="video-container">
-      <!-- Replace with your actual video embed code -->
       <iframe src="{% static 'images/Market In action.mp4'%}" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
   </div>
@@ -320,8 +405,8 @@
 
     <div class="leaf">
       <h3>2025</h3>
-      <p>The volume of quantities sold by farmers is now about 300 to 400 kg per farmer  per week.
- farmers' income increased by approximately 10%.
+      <p>The volume of quantities sold by farmers is now about 300 to 400 kg per farmer per week.
+farmers' income increased by approximately 10%.
 </p>
     </div>
 
@@ -335,7 +420,6 @@
   </div>
   <div class="section-spacer"></div>
 
-  <!-- Mission & Vision Sections -->
   <div class="mv-container">
     <div class="mission">
       <h2 class="mv-title">Our Mission</h2>
@@ -347,7 +431,6 @@
       <p class="mv-text">We envision a future where every community thrives through direct farm-to-table connections, where sustainable agriculture flourishes, and where local food systems strengthen the health, economy, and bonds of our neighborhoods.</p>
     </div>
   </div>
-
 
 </body>
 </html>
