@@ -5,44 +5,121 @@
 
 {% block extra_css %}
     <link rel="stylesheet" href="{% static 'blogs/css/blog_list.css' %}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
 <div class="blog-list-container">
     <div class="blog-list-header">
-        <h1><i class="fas fa-book-open me-2"></i>Latest Blogs</h1>
-        <a href="{% url 'home' %}" class="back-link">
-            <i class="fas fa-arrow-left me-1"></i> Back to Home
-        </a>
+        <!-- <h1><span class="material-icons-round">menu_book</span>Latest Blogs</h1> -->
+        <h1>Latest Blogs</h1>
+        <!-- <a href="{% url 'home' %}" class="back-link">
+            <span class="material-icons-round">arrow_back</span> Back to Home
+        </a> -->
     </div>
 
-    <div class="blog-posts">
-        {% for blog in blogs %}
-        <article class="blog-post {% cycle 'enter-left' 'enter-right' %}">
-            <div class="post-image">
-                <img src="{{ blog.image.url }}" alt="{{ blog.name }}">
-                <div class="image-overlay-icon">
-                    <i class="far fa-eye"></i>
+    <div class="blog-layout">
+        <div class="blog-posts">
+            {% for blog in blogs %}
+            <article class="blog-post {% cycle 'enter-left' 'enter-right' %}">
+                <div class="post-image">
+                    <img src="{{ blog.main_image.url }}" alt="{{ blog.name }}">
+                    <!-- <div class="image-overlay-icon">
+                        <span class="material-icons-round">visibility</span>
+                    </div> -->
+                </div>
+                <div class="post-content">
+                    <div class="post-meta">
+                        <span class="post-date">
+                            <span class="material-icons-round">event</span> {{ blog.created_date|date:"F j, Y" }}
+                        </span>
+                    </div>
+                    <h2 class="post-title">
+                        {{ blog.name }}
+                    </h2>
+                    <a href="{% url 'blog_detail' blog.id %}" class="read-more">
+                        Read More <span class="material-icons-round">arrow_forward</span>
+                    </a>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+
+        <!-- Filter Sidebar -->
+        <div class="filter-sidebar">
+            <div class="filter-card">
+                <h3><span class="material-icons-round">filter_alt</span> Blog Filters</h3>
+                
+                <!-- Dates Section -->
+                <div class="filter-section">
+                    <h4><span class="material-icons-round">event</span>Event Date</h4>
+                    <ul class="filter-list date-list">
+                        <li>
+                            <a href="?" class="filter-option {% if not selected_date %}active{% endif %}">
+                                All Dates
+                            </a>
+                        </li>
+                        {% for date in all_dates %}
+                        <li>
+                            <a href="?date={{ date|date:'Y-m-d' }}" 
+                               class="filter-option {% if selected_date == date|date:'Y-m-d' %}active{% endif %}">
+                                {{ date|date:"M j, Y" }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                
+                <!-- Visits Section -->
+                <div class="filter-section">
+                    <h4><span class="material-icons-round">place</span> Visits</h4>
+                    <ul class="filter-list">
+                        {% for blog in visit_blogs %}
+                        <li>
+                            <a href="{% url 'blog_detail' blog.id %}" 
+                               class="filter-option {% if selected_category == 'visit' %}active{% endif %}">
+                                {{ blog.name|truncatechars:25 }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                
+                <!-- Ceremonies Section -->
+                <div class="filter-section">
+                    <h4><span class="material-icons-round">celebration</span> Ceremonies</h4>
+                    <ul class="filter-list">
+                        {% for blog in ceremony_blogs %}
+                        <li>
+                            <a href="{% url 'blog_detail' blog.id %}" 
+                               class="filter-option {% if selected_category == 'ceremony' %}active{% endif %}">
+                                {{ blog.name|truncatechars:25 }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
                 </div>
             </div>
-            <div class="post-content">
-                <div class="post-meta">
-                    <span class="post-date">
-                        <i class="far fa-calendar-alt me-1"></i> {{ blog.created_date|date:"F j, Y" }}
-                    </span>
-                </div>
-                <h2 class="post-title">
-                    <i class="fas fa-pen-fancy me-2"></i>{{ blog.name }}
-                </h2>
-                <p class="post-excerpt">
-                    <i class="fas fa-quote-left me-2"></i>{{ blog.short_description|default:"..." }}
-                </p>
-                <a href="{% url 'blog_detail' blog.id %}" class="read-more">
-                    Read More <i class="fas fa-arrow-right ms-1"></i>
-                </a>
-            </div>
-        </article>
-        {% endfor %}
+        </div>
     </div>
 </div>
+
+<script>
+// Add animation classes when elements come into view
+document.addEventListener('DOMContentLoaded', function() {
+    const blogPosts = document.querySelectorAll('.blog-post');
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1 });
+    
+    blogPosts.forEach(post => {
+        observer.observe(post);
+    });
+});
+</script>
 {% endblock %}

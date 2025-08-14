@@ -71,6 +71,13 @@
           </div>
           <a href="{% url 'contactus:contact' %}" class="nav-item nav-link">Contact Us</a>
         </div>
+        {% if user.is_authenticated and request.resolver_match.url_name in 'blog_list blog_detail saved_blogs' %}
+        <div class="ms-3">
+            <a href="{% url 'saved_blogs' %}" class="saved-nav-icon">
+                <span class="material-icons-round">bookmark</span>
+            </a>
+        </div>
+        {% endif %}
         <span class="brand-text ms-2 white-space-nowrap">
     Alexandria Chamber Of Commerce
   </span>
@@ -148,7 +155,7 @@
       </p>
       <p>
         <i class="fas fa-envelope"></i>
-        <a href="mailto:info@example.com">info@example.com</a>
+        <a href="mailto:info@alexandria-chamber.com">info@alexandria-chamber.com</a>
       </p>
     </div>
   </div>
