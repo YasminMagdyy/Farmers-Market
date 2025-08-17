@@ -164,47 +164,73 @@
             <p>Discover the range of services we offer to bring you the best organic products</p>
         </div>
 
-<div class="services-scroll-wrapper position-relative">
-    <button class="scroll-btn left"><i class="fas fa-chevron-left"></i></button>
-    <div class="services-container wow fadeInUp" data-wow-delay="0.2s" id="servicesSlider">
-        <div class="service-pair">
-            <div class="service-card">
-            <div class="service-icon">
-                <i class="fas fa-shipping-fast"></i>
+        <div class="services-scroll-wrapper position-relative">
+            <!-- Scroll buttons (hidden on mobile) -->
+            <button class="scroll-btn left d-none d-lg-block"><i class="fas fa-chevron-left"></i></button>
+            
+            <div class="services-container wow fadeInUp" data-wow-delay="0.2s" id="servicesSlider">
+                <!-- Service Pair 1 -->
+                <div class="service-pair">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-bus"></i>
+                        </div>
+                        <h4>Bus Transport</h4>
+                        <p>The Farmer's Market provides a bus transport service designed for safe, reliable, and comfortable travel for both individuals and groups to the nearest point for daily commutes.</p>
+                    </div>
+                    
+                    <div class="service-card">  
+                        <div class="service-icon">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <h4>Vegetables Slicing</h4>
+                        <p>The Farmer's Market offers a vegetable slicing service to save you time in the kitchen. We provide fast, precise, and hygienic preparation for a wide variety of vegetables.</p>
+                    </div>
+                </div>
+                
+                <!-- Service Pair 2 -->
+                <div class="service-pair">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-glass-martini-alt"></i>
+                        </div>
+                        <h4>Beverages</h4>
+                        <p>The Farmer's Market provides a diverse selection of beverages, including juices, and hot options like tea and coffee. Our beverages promise quality and satisfaction with every sip.</p>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-children"></i>
+                        </div>
+                        <h4>Kids Area</h4>
+                        <p>The Farmer's Market features a dedicated Kids' Area, offering a safe and engaging space for children. This service benefits both the children of farmers and customers who visit the market.</p>
+                    </div>
+                </div>
+                
+                <!-- Service Pair 3 -->
+                <div class="service-pair">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-shipping-fast"></i>
+                        </div>
+                        <h4>Fast Delivery</h4>
+                        <p>COMING SOON - We're working on a fast delivery service to bring fresh products directly to your doorstep.</p>
+                    </div>
+                    
+                    <!-- Empty card to maintain layout if you want even number -->
+                    <!-- <div class="service-card"></div> -->
+                </div>
             </div>
-            <h4>Fast Delivery</h4>
-            <p>Get your fresh products delivered quickly and efficiently from the nearest pickup point, ensuring maximum freshness and convenience right to your doorstep.</p>
+            
+            <button class="scroll-btn right d-none d-lg-block"><i class="fas fa-chevron-right"></i></button>
         </div>
-
-        <div class="service-card">  
-            <div class="service-icon">
-                <i class="fas fa-utensils"></i>
-            </div>
-            <h4>Vegetables Slicing</h4>
-            <p>Our vegetable slicing service offers fast, precise, and hygienic preparation of a wide variety of vegetables, saving you valuable time in the kitchen.</p>
+        
+        <!-- Mobile Indicators -->
+        <div class="service-indicators d-lg-none">
+            <div class="indicator active" data-slide="0"></div>
+            <div class="indicator" data-slide="1"></div>
+            <div class="indicator" data-slide="2"></div>
         </div>
-        </div>
-        <div class="service-pair">
-            <div class="service-card">
-            <div class="service-icon">
-                <i class="fas fa-bus"></i>
-            </div>
-            <h4>Bus Transport</h4>
-            <p>Our bus transport service provides safe, reliable, and comfortable travel options for individuals and groups. Whether for daily commutes, school runs, or special events, our well-maintained buses and professional drivers ensure a smooth journey every time.</p>
-        </div>
-
-        <div class="service-card">
-            <div class="service-icon">
-                <i class="fas fa-glass-martini-alt"></i>
-            </div>
-            <h4>Beverages</h4>
-            <p>We offer a wide range of refreshing beverages, from chilled soft drinks and juices to energizing hot drinks like tea and coffee. Perfectly suited for events, meetings, or everyday enjoyment, our beverage service guarantees quality and satisfaction in every sip.</p>
-        </div>
-        </div>
-    </div>
-    <button class="scroll-btn right"><i class="fas fa-chevron-right"></i></button>
-</div>
     </div>
 </section>
-
 {% endblock %}

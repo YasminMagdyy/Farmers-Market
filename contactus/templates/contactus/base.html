@@ -3,59 +3,196 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="" name="keywords">
-    <meta content="" name="description">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+{% extends 'blogs/base.html' %}
 
-    <!-- Favicon -->
-    <link href="{% static 'img/favicon.ico' %}" rel="icon">
+{% block title %}Contact Us - Farmers Market{% endblock %}
 
-    <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&family=Lora:wght@600;700&display=swap" rel="stylesheet"> 
-
-    <!-- Icon Font Stylesheet -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-
-    <!-- Libraries Stylesheet -->
-    <link href="{% static 'lib/animate/animate.min.css' %}" rel="stylesheet">
-    <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
-
-    <!-- Customized Bootstrap Stylesheet -->
-    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+{% block content %}
+    <!-- يمكن تضيفي محتوى إضافي هنا إذا لزم الأمر -->
+    {% block contact_content %}{% endblock %}
+{% endblock %}
+    <!-- <title>{% block title %}Farmers Market{% endblock %}</title> -->
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    
+    <!-- WOW.js for animations -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    {% block extra_css %}{% endblock %}
 </head>
 <body>
+    <!-- Navbar Start -->
+    <div class="container-fluid fixed-top px-0 wow fadeIn" data-wow-delay="0.1s">
+        <nav class="navbar navbar-expand-lg navbar-light py-lg-0 px-lg-5">
+            <!-- Moving Ads Header -->
+            <div class="news-ticker">
+                {% if ads %}
+                    <marquee behavior="scroll" direction="left" scrollamount="5" onmouseover="this.stop()" onmouseout="this.start()">
+                        {% for ad in ads %}
+                            {{ ad.eventName }} 
+                        {% endfor %}
+                    </marquee>
+                {% else %}
+                    <marquee behavior="scroll" direction="left" scrollamount="5" onmouseover="this.stop()" onmouseout="this.start()">
+                        From Land To Hand.
+                    </marquee>
+                {% endif %}
+            </div>
+            <a href="{% url 'home' %}" class="navbar-brand ms-4 ms-lg-0">
+                <img src="{% static 'img/470510498_10234696151491117_8366472176490529474_n-removebg-preview.png' %}" alt="Farmers Market Logo">
+                <span class="brand-text">Farmers Market</span>
+            </a>
+            <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav ms-auto p-4 p-lg-0">
+                    <a href="{% url 'home' %}" class="nav-item nav-link active">
+                        <span class="nav-text"><span>Home</span></span>
+                    </a>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-item nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                            <span class="nav-text"><span>Blog</span></span>
+                        </a>
+                        <div class="dropdown-menu m-0">
+                            <a href="#" class="dropdown-item">About Us</a>
+                            <a href="#" class="dropdown-item">Our Story</a>
+                            <a href="#" class="dropdown-item">Our Team</a>
+                        </div>
+                    </div>
+            
+                    <a href="{% url 'contactus:contact' %}" class="nav-item nav-link"> <!-- استخدام namespace -->                        <span class="nav-text"><span>Contact Us</span></span>
+                    </a>
+                </div>
+                <div class="d-none d-lg-flex ms-2 social-icons">
+                    <a href="https://www.facebook.com/yourpage" target="_blank" class="social-icon">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://www.instagram.com/yourpage" target="_blank" class="social-icon">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/yourpage" target="_blank" class="social-icon">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <!-- Navbar End -->
 
+    <!-- Content Block -->
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
 
-    {% block content %}
-    {% endblock %}
+    <!-- Footer Start -->
+    <footer>
+        <img src="{% static 'img/your-footer-image.jpg' %}" alt="Footer Image">
+        <div class="newsletter-section">
+            <form method="post" action="{% url 'subscribe' %}">
+                {% csrf_token %}
+                <div class="input-group">
+                    <input type="email" class="form-control" placeholder="Enter your email" name="email" required>
+                    <button type="submit" class="btn-subscribe">Subscribe</button>
+                </div>
+            </form>
+            {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% if user.is_authenticated %}
+                <p>Welcome, {{ user.username }}! <a href="{% url 'logout' %}">Logout</a></p>
+            {% endif %}
+        </div>
+    </footer>
+    <!-- Footer End -->
 
-   
+    <!-- Footer Bottom Start -->
+    <div class="footer-bottom">
+        <h5>Contact Us</h5>
+        <p>Alexandria Chamber of Commerce Street - Raml Station 13 <i class="fas fa-map-marker-alt"></i></p>
+        <p><a href="mailto:info@alexandria-chamber.com">info@alexandria-chamber.com</a> <i class="fas fa-envelope"></i></p>
+    </div>
+    <!-- Footer Bottom End -->
 
-    <!-- Back to Top -->
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
-
-    <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{% static 'lib/wow/wow.min.js' %}"></script>
-    <script src="{% static 'lib/easing/easing.min.js' %}"></script>
-    <script src="{% static 'lib/waypoints/waypoints.min.js' %}"></script>
-    <script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
-
-    <!-- Template Javascript -->
-    <script src="{% static 'js/main.js' %}"></script>
-
-    <!-- Fallback to hide spinner -->
+    <!-- WOW.js for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
     <script>
-        $(document).ready(function() {
-            $("#spinner").removeClass("show");
-            new WOW().init();
+        new WOW().init();
+    </script>
+
+    <!-- Custom JavaScript -->
+    <script>
+        const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (this.classList.contains('dropdown-toggle')) return;
+
+                navLinks.forEach(nav => nav.classList.remove('active'));
+                this.classList.add('active');
+            });
         });
     </script>
+    {% block extra_js %}{% endblock %}
+    <!-- Add this right before the closing </body> tag in base.html -->
+<div class="modal fade" id="adModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="adModalTitle">Event Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="adModalBody">
+        <!-- Event details will be inserted here -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Add this to your existing JavaScript section
+document.addEventListener('DOMContentLoaded', function() {
+  // Make ad items clickable and show modal
+  document.querySelectorAll('.ad-item').forEach(item => {
+    item.style.cursor = 'pointer';
+    item.addEventListener('click', function() {
+      const eventName = this.textContent.trim();
+      // Find the corresponding event data (you'll need to pass this from your view)
+      const eventsData = JSON.parse('{{ ads_json|escapejs }}');
+      const event = eventsData.find(e => e.eventName === eventName);
+      
+      if (event) {
+        document.getElementById('adModalTitle').textContent = event.eventName;
+        document.getElementById('adModalBody').innerHTML = `
+          <p><strong>Description:</strong> ${event.eventDescription}</p>
+          <p><strong>Date:</strong> ${new Date(event.startDate).toLocaleString()} to ${new Date(event.endDate).toLocaleString()}</p>
+          <p><strong>Status:</strong> ${event.eventRegistrationStatus}</p>
+        `;
+        var modal = new bootstrap.Modal(document.getElementById('adModal'));
+        modal.show();
+      }
+    });
+  });
+});
+</script>
 </body>
 </html>

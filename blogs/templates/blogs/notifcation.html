@@ -1,0 +1,25 @@
+<!-- event_notification_email.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upcoming Events</title>
+</head>
+<body>
+    <h2>Dear Subscriber,</h2>
+    <p>Here are the upcoming events at Farmers Market:</p>
+    
+    <ul>
+        {% for event in events %}
+        <li>
+            <strong>{{ event.eventName }}</strong><br>
+            {{ event.eventDescription }}<br>
+            <strong>When:</strong> {{ event.startDate|date:"F j, Y H:i" }} - {{ event.endDate|date:"F j, Y H:i" }}<br>
+            <strong>Status:</strong> {{ event.get_eventRegistrationStatus_display }}
+        </li>
+        {% endfor %}
+    </ul>
+    
+    <p>We hope to see you there!</p>
+    <p>The Farmers Market Team</p>
+</body>
+</html>

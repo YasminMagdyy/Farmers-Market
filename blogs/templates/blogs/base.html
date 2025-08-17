@@ -1,4 +1,5 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
@@ -7,25 +8,13 @@
   <title>{% block title %}Farmers Market{% endblock %}</title>
 
   <!-- Bootstrap CSS -->
-  <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-  >
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <!-- Font Awesome -->
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-  >
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <!-- Google Fonts -->
-  <link
-    href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap"
-    rel="stylesheet"
-  >
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
   <!-- Animate.css -->
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
-  />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
   <!-- Base CSS -->
   <link rel="stylesheet" href="{% static 'blogs/css/base.css' %}">
   {% block extra_css %}{% endblock %}
@@ -36,20 +25,10 @@
   <nav class="navbar navbar-expand-lg fixed-top wow fadeInDown" data-wow-delay="0.1s">
     <div class="container">
       <a href="{% url 'home' %}" class="navbar-brand">
-        <img
-          src="{% static 'blogs/img/Green_and_Cream_Illustrative_Healthy_Food_Logo.png' %}"
-          alt="Logo"
-          height="50"
-        >
+        <img src="{% static 'blogs/img/Green_and_Cream_Illustrative_Healthy_Food_Logo.png' %}" alt="Logo" height="50">
         <span class="brand-text">Farmers Market</span>
-
       </a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarCollapse"
-      >
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -57,11 +36,7 @@
           <a href="{% url 'home' %}" class="nav-item nav-link active">Home</a>
           <a href="{% url 'blog_list' %}" class="nav-item nav-link">Blog</a>
           <div class="nav-item dropdown">
-            <a
-              href="{% url 'about_us:about_us' %}"
-              class="nav-link dropdown-toggle"
-              data-bs-toggle="dropdown"
-            >
+            <a href="{% url 'about_us:about_us' %}" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
               About Us
             </a>
             <div class="dropdown-menu">
@@ -72,11 +47,39 @@
           <a href="{% url 'contactus:contact' %}" class="nav-item nav-link">Contact Us</a>
         </div>
         <span class="brand-text ms-2 white-space-nowrap">
-    Alexandria Chamber Of Commerce
-  </span>
-</div>
+          Alexandria Chamber Of Commerce
+        </span>
+      </div>
     </div>
   </nav>
+<!-- Ad Banner -->
+<div class="ad-banner wow fadeIn" data-wow-delay="0.2s">
+  <div class="ad-container">
+    {% if global_ads %}
+      <div class="ad-content">
+        {% for ad in global_ads %}
+          <span class="ad-item" 
+                data-name="{{ ad.eventName }}" 
+                data-desc="{{ ad.eventDescription }}"
+                data-start="{{ ad.startDate|date:'Y-m-d H:i' }}"
+                data-end="{{ ad.endDate|date:'Y-m-d H:i' }}"
+                data-status="{{ ad.eventRegistrationStatus }}">
+            {{ ad.eventName }}
+          </span>
+          {% if not forloop.last %} <i class="fas fa-seedling mx-3" style="
+          color: #276312;
+          padding-top: 5px;
+          padding-right: 200px;
+          padding-left: 200px;"></i> {% endif %}        
+          {% endfor %}
+      </div>
+    {% else %}
+      <div class="ad-content">
+        <span class="ad-item">From Land To Hand.</span>
+      </div>
+    {% endif %}
+  </div>
+</div>
 
   <!-- Main Content -->
   <main class="content">
@@ -85,31 +88,16 @@
 
   <!-- Footer with Newsletter -->
   <footer class="wow fadeInUp" data-wow-delay="0.1s">
-    <img
-      src="{% static 'blogs/img/Green_and_Cream_Illustrative_Healthy_Food_Presentation.png' %}"
-      alt="Footer Image"
-    >
+    <img src="{% static 'blogs/img/OOO.png' %}" alt="Footer Image">
     <div class="newsletter-section">
       <!-- Subscription Form -->
-      <form
-        method="post"
-        action="{% url 'subscribe' %}"
-        class="row g-2 align-items-center"
-      >
+      <form method="post" action="{% url 'subscribe' %}" class="row g-2 align-items-center">
         {% csrf_token %}
         <div class="col-md-6 col-sm-12">
-          <input
-            type="email"
-            name="email"
-            class="form-control"
-            placeholder="Enter your Email"
-            required
-          >
+          <input type="email" name="email" class="form-control" placeholder="Enter your Email" required>
         </div>
         <div class="col-md-6 col-sm-12">
-          <button type="submit" class="btn btn-subscribe w-100">
-            Subscribe
-          </button>
+          <button type="submit" class="btn btn-subscribe w-100">Subscribe</button>
         </div>
       </form>
 
@@ -127,11 +115,9 @@
       <!-- Notification Bell (for logged-in users) -->
       {% if user.is_authenticated %}
         <div class="text-center mt-3">
-          <button id="notify-btn" class="btn btn-light">
-            <i
-              class="fas fa-bell{% if user.email and subscriber.notify %} text-primary{% endif %}"
-              style="font-size: 1.5rem;"
-            ></i>
+          <button id="notify-btn" class="btn btn-light" style="background-color: #ffffff00;
+    border-color: #ffffff00;">
+            <i class="fas fa-bell{% if user.email and subscriber.notify %} text-primary{% endif %}" style="font-size: 1.5rem;"></i>
           </button>
         </div>
       {% endif %}
@@ -142,47 +128,138 @@
   <div class="footer-bottom wow fadeInUp" data-wow-delay="0.2s">
     <div class="container text-center">
       <h5>Contact Us</h5>
-      <p>
-        <i class="fas fa-map-marker-alt"></i>
-        Alexandria Chamber of Commerce Street - Raml Station 13
-      </p>
-      <p>
-        <i class="fas fa-envelope"></i>
-        <a href="mailto:info@example.com">info@example.com</a>
-      </p>
+      <p><i class="fas fa-map-marker-alt"></i> Alexandria Chamber of Commerce Street - Raml Station 13</p>
+      <p><i class="fas fa-envelope"></i> <a href="mailto:info@alexandria-chamber.com">info@alexandria-chamber.com</a></p>
     </div>
+  </div>
+
+  <!-- Event Details Modal -->
+  <div class="modal fade" id="adModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-event">
+        <div class="modal-header bg-success text-white">
+          <h5 class="modal-title" id="adModalTitle">Event Details</h5>
+          
+        </div>
+        <div class="modal-body" id="adModalBody">
+          <!-- Content will be inserted here -->
+        </div>
+        <div class="modal-footer">
+  <button type="button" id="forceGreenBtn" class="btn" data-bs-dismiss="modal"
+          style="background-color: #6c757d; border-color: #6c757d; color: white; transition: all 0.3s ease;">
+      Close
+  </button>
+        </div>
+      
   </div>
 
   <!-- JavaScript -->
   <script>document.documentElement.classList.add('js-enabled');</script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-  ></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
   <script src="{% static 'blogs/js/script.js' %}"></script>
 
-  <!-- Toggle Notification via AJAX -->
+  <script>
+  // Toggle Notification via AJAX
   {% if user.is_authenticated %}
-    <script>
-      $('#notify-btn').on('click', function() {
-        $.ajax({
-          url: "{% url 'toggle_notify' %}",
-          method: "POST",
-          headers: {
-            "X-CSRFToken": "{{ csrf_token }}"
-          },
-          success: data => {
-            if (data.success) {
-              const icon = $('#notify-btn i');
-              icon.toggleClass('text-primary');
-              alert(data.notify ? 'تم تفعيل الإشعارات' : 'تم إيقاف الإشعارات');
-            }
+    $('#notify-btn').on('click', function() {
+      $.ajax({
+        url: "{% url 'toggle_notify' %}",
+        method: "POST",
+        headers: {
+          "X-CSRFToken": "{{ csrf_token }}"
+        },
+        success: data => {
+          if (data.success) {
+            const icon = $('#notify-btn i');
+            icon.toggleClass('text-primary');
+            alert(data.notify ? 'تم تفعيل الإشعارات' : 'تم إيقاف الإشعارات');
           }
-        });
+        }
       });
-    </script>
+    });
   {% endif %}
+
+ // Ad Click Handler - works on all pages
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.ad-item').forEach(item => {
+    item.style.cursor = 'pointer';
+    item.addEventListener('click', function() {
+      if (this.dataset.name) {
+        document.getElementById('adModalTitle').textContent = this.dataset.name;
+        document.getElementById('adModalBody').innerHTML = `
+          <p><strong>Description:</strong> ${this.dataset.desc}</p>
+          <p><strong>Start:</strong> ${this.dataset.start}</p>
+          <p><strong>End:</strong> ${this.dataset.end}</p>
+          <p><strong>Status:</strong> ${this.dataset.status.replace(/_/g, ' ')}</p>
+        `;
+        new bootstrap.Modal(document.getElementById('adModal')).show();
+      }
+    });
+  });
+});
+// Function to fetch and update ads
+function updateAds() {
+    $.ajax({
+        url: '/api/current-ads/',
+        method: 'GET',
+        success: function(data) {
+            const adContainer = $('.ad-content');
+            if (data.ads.length > 0) {
+                let adHtml = '';
+                data.ads.forEach((ad, index) => {
+                    adHtml += `
+                        <span class="ad-item" 
+                              data-name="${ad.name}"
+                              data-desc="${ad.desc}"
+                              data-start="${ad.start}"
+                              data-end="${ad.end}"
+                              data-status="${ad.status}">
+                            ${ad.name}
+                        </span>`;
+                    if (index < data.ads.length - 1) {
+                        adHtml += `<i class="fas fa-seedling mx-3" style="color: #276312; padding-top: 5px; padding-right: 200px; padding-left: 200px;"></i>`;
+                    }
+                });
+                adContainer.html(adHtml);
+                // Reattach click handlers to new ad items
+                attachAdClickHandlers();
+            } else {
+                adContainer.html('<span class="ad-item">From Land To Hand.</span>');
+            }
+        }
+    });
+}
+
+// Function to attach click handlers
+function attachAdClickHandlers() {
+    $('.ad-item').css('cursor', 'pointer').on('click', function() {
+        if (this.dataset.name) {
+            $('#adModalTitle').text(this.dataset.name);
+            $('#adModalBody').html(`
+                <p><strong>Description:</strong> ${this.dataset.desc}</p>
+                <p><strong>Start:</strong> ${this.dataset.start}</p>
+                <p><strong>End:</strong> ${this.dataset.end}</p>
+                <p><strong>Status:</strong> ${this.dataset.status.replace(/_/g, ' ')}</p>
+            `);
+            new bootstrap.Modal($('#adModal')[0]).show();
+        }
+    });
+}
+
+// Initial setup
+$(document).ready(function() {
+    // Load ads initially
+    updateAds();
+    
+    // Set up periodic refresh (every 5 minutes)
+    setInterval(updateAds, 100000);
+    
+    // Initial click handlers
+    attachAdClickHandlers();
+});
+  </script>
 
   {% block extra_js %}{% endblock %}
 </body>

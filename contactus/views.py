@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
 from .forms import ContactForm
 from django.contrib import messages
+from .models import Event
+from django.utils import timezone
+from .forms import ContactForm
 
 def contact(request):
     if request.method == 'POST':
