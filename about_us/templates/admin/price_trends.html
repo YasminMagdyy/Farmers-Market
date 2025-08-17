@@ -1,0 +1,48 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block content %}
+<h1>Product Price Trends</h1>
+
+<select id="productSelect" multiple style="width:300px;">
+  {% for product in products %}
+  <option value="{{ product.id }}">{{ product.productName }}</option>
+  {% endfor %}
+</select>
+
+<canvas id="priceChart" width="800" height="400"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const ctx = document.getElementById("priceChart").getContext("2d");
+    const chart = new Chart(ctx, {
+        type: 'line',
+        data: { labels: [], datasets: [] },
+        options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+    });
+
+    document.getElementById("productSelect").addEventListener("change", function() {
+        const selected = Array.from(this.selectedOptions).map(o => o.value);
+        fetch(`price-data/?${selected.map(p => 'products[]=' + p).join('&')}`)
+        .then(res => res.json())
+        .then(data => {
+            const allDates = [...new Set(Object.values(data).flat().map(p => p.date))].sort();
+            chart.data.labels = allDates;
+
+            chart.data.datasets = Object.keys(data).map((productName, idx) => {
+                const priceMap = Object.fromEntries(data[productName].map(p => [p.date, p.price]));
+                return {
+                    label: productName,
+                    data: allDates.map(d => priceMap[d] || null),
+                    borderColor: `hsl(${idx * 60}, 70%, 50%)`,
+                    fill: false
+                };
+            });
+
+            chart.update();
+        });
+    });
+});
+</script>
+{% endblock %}

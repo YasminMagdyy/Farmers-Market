@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+from .celerybeat_schedule import CELERY_BEAT_SCHEDULE
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -30,15 +31,21 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'admin_tools_stats',
+    'django_nvd3',
+    'schema_graph',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'blogs',
-    'contactus',
-    'about_us',
+    # Custom apps - use ONLY ONE format per app
+    'blogs.apps.BlogsConfig',          # Preferred explicit config
+    'contactus.apps.ContactusConfig',  # Keep this, remove bare 'contactus'
+    'about_us.apps.AboutUsConfig',     # Add if exists
+    'eventHandler.apps.EventhandlerConfig',
+    'markdownify.apps.MarkdownifyConfig',
 ]
 
 MIDDLEWARE = [
@@ -64,6 +71,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'blogs.context_processors.ads_processor',
             ],
         },
     },
@@ -115,17 +123,17 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Africa/Cairo'  # Or your local timezone
+USE_TZ = True
 
 USE_I18N = True
 
-USE_TZ = True
+# USE_TZ = True
 
 # for multiple languages adding Django's i18n support
 USE_I18N = True
 USE_L10N = True
 
-TIME_ZONE = 'Africa/Cairo'  # Example for Egypt
 
 
 # Static files (CSS, JavaScript, Images)
@@ -151,3 +159,13 @@ STATICFILES_DIRS = [
     BASE_DIR / "blogs/static",
 ]
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+# settings.py
+# Celery settings
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Africa/Cairo'  # Or your timezone'
+CELERY_ENABLE_UTC = False
+CELERY_BEAT_SCHEDULE = CELERY_BEAT_SCHEDULE

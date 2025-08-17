@@ -2,7 +2,11 @@
 {% load static %}
 {% block content %}
 
-
+<div>
+    <br>
+    <br>
+    <br>
+</div>
 <!-- Contact Start -->
 <div class="container-xxl py-6">
     <div class="container">
@@ -10,8 +14,21 @@
             <h1 class="display-5 mb-3">🌱 Get In Touch With Us</h1>
             <p class="lead">Have questions about our market, vendors, or events? We'd love to hear from you!</p>
         </div>
+
+        <!-- Tabs -->
+        <div class="tabs mb-4">
+            <div class="tab-buttons text-center">
+                <button class="tab-button active btn btn-success me-2" onclick="openTab(event, 'contactForm')">
+                    <i class="fas fa-envelope me-2"></i>Contact Us!
+                </button>
+                <button class="tab-button btn btn-outline-success" onclick="openTab(event, 'eventForm')">
+                    <i class="fas fa-calendar-alt me-2"></i>Event Registration
+                </button>
+            </div>
+        </div>
+
         <div class="row g-5 justify-content-center">
-            <!-- Contact Info Card -->
+            <!-- Contact Info Card - Shows on both tabs -->
             <div class="col-lg-5 col-md-12 wow fadeInUp" data-wow-delay="0.1s">
                 <div class="bg-success text-white d-flex flex-column justify-content-center h-100 p-5 rounded-4" style="background: linear-gradient(135deg, #689F38, #8BC34A); border-left: 8px solid #6D4C41;">
                     <div class="d-flex align-items-center mb-4">
@@ -55,8 +72,8 @@
                 </div>
             </div>
 
-            <!-- Contact Form -->
-            <div class="col-lg-7 col-md-12 wow fadeInUp" data-wow-delay="0.5s">
+            <!-- Contact Form Tab -->
+            <div id="contactForm" class="col-lg-7 col-md-12 wow fadeInUp tab-content active" data-wow-delay="0.5s">
                 {% if messages %}
                     {% for message in messages %}
                         <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
@@ -111,6 +128,63 @@
                     </div>
                 </form>
             </div>
+
+            <!-- Event Registration Form Tab -->
+            <div id="eventForm" class="col-lg-7 col-md-12 wow fadeInUp tab-content" data-wow-delay="0.5s">
+                {% if event_messages %}
+                    {% for message in event_messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                            <i class="fas fa-{% if message.tags == 'success' %}check-circle{% else %}exclamation-circle{% endif %} me-2"></i>
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                
+                <form method="post" action="{% url 'contactus:contact' %}" class="p-4 p-md-5 rounded-4" style="background-color: #f8f9fa; border: 1px solid #e9ecef;">
+                    <h3 class="mb-4 text-success"><i class="fas fa-calendar-check me-2"></i> Register for an Event</h3>
+                    {% csrf_token %}
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="attendee_name" name="attendee_name" placeholder="Your Name" required>
+                                <label for="attendee_name"><i class="fas fa-user me-1"></i> Your Name</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="tel" class="form-control" id="attendee_phone" name="attendee_phone" placeholder="Your Phone" required>
+                                <label for="attendee_phone"><i class="fas fa-phone me-1"></i> Your Phone</label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-floating">
+                                <select class="form-select" id="event" name="event" required>
+                                    <option value="" selected disabled>Select an event</option>
+                                    {% for event in available_events %}
+                                        <option value="{{ event.id }}">{{ event.eventName }} - {{ event.startDate|date:"M d, Y" }}</option>
+                                    {% endfor %}
+                                </select>
+                                <label for="event"><i class="fas fa-calendar me-1"></i> Choose Event</label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="event-details p-3 rounded" style="background-color: #e8f5e8; border: 1px solid #c3e6cb;">
+                                <h5 class="text-success mb-2"><i class="fas fa-info-circle me-2"></i>Event Details</h5>
+                                <p class="mb-1" id="selected-event-description">Please select an event to see details.</p>
+                                <p class="mb-1"><strong>Start Date:</strong> <span id="selected-event-start">-</span></p>
+                                <p class="mb-1"><strong>End Date:</strong> <span id="selected-event-end">-</span></p>
+                                <p class="mb-0"><strong>Registration Closes:</strong> <span id="selected-event-close">-</span></p>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button class="btn btn-success rounded-pill py-3 px-5" type="submit" style="background: linear-gradient(135deg, #689F38, #8BC34A); border: none;">
+                                <i class="fas fa-user-plus me-2"></i> Register for Event
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
@@ -119,35 +193,67 @@
 <!-- Market Location Section -->
 <div class="container-xxl py-5">
     <div class="container">
-        <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s">
-            <h2 class="display-5 mb-3">📍 Where to Find Our Farmers Market</h2>
+        <!-- <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s">
+            <h2 class="display-5 mb-3">📍 Where to Find Alexandria's Farmers Market</h2>
             <p class="lead">Visit us at our vibrant market location</p>
-        </div>
+        </div> -->
         
-        <!-- Smart Market Map Section -->
-        <div class="wow fadeIn" data-wow-delay="0.1s">
-            <div class="position-relative rounded-4 overflow-hidden shadow-lg">
-                <div class="map-container">
-                    <iframe class="w-100" style="height: 500px; border: none;" 
-                        id="marketMap"
-                        src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3412.8807997907525!2d29.901641675598583!3d31.196318274364042!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMzHCsDExJzQ2LjgiTiAyOcKwNTQnMTUuMiJF!5e0!3m2!1sen!2seg!4v1747036926298!5m2!1sen!2seg"
-                        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <!-- Map and Text Split Section -->
+        <div class="row g-4 align-items-center wow fadeIn" data-wow-delay="0.1s">
+            <!-- Map Section - Left Half -->
+            <div class="col-lg-6">
+                <div class="position-relative rounded-4 overflow-hidden shadow-lg">
+                    <div class="map-container">
+                        <iframe class="w-100" style="height: 500px; border: none;" 
+                            id="marketMap"
+                            src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3412.8807997907525!2d29.901641675598583!3d31.196318274364042!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMzHCsDExJzQ2LjgiTiAyOcKwNTQnMTUuMiJF!5e0!3m2!1sen!2seg!4v1747036926298!5m2!1sen!2seg"
+                            allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Text Section - Right Half -->
+            <div class="col-lg-6">
+                <div class="text-section h-100 d-flex flex-column justify-content-center p-4">
+                    <!-- Main Title -->
+                    <div class="main-title-container mb-4">
+                        <h1 class="main-title text-success">From Land to Hand</h1>
+                        <div class="title-underline"></div>
+                    </div>
                     
-                    <!-- Smart Map Overlay -->
-                    <div class="map-overlay">
-                        <div class="market-info-card">
-                            <h3 class="text-success"><i class="fas fa-map-marked-alt me-2"></i> Market Location</h3>
-                            <p class="mb-3"><i class="fas fa-map-pin me-2"></i>Saad Zaghloul Street, next to Amir Cinema</p>
-                            <div class="market-hours">
-                                <h5><i class="far fa-clock me-2"></i>Opening Hours:</h5>
-                                <ul class="list-unstyled">
-                                    <li><span class="day">Saturday:</span> 8:00 AM - 3:00 PM</li>
-
-                                </ul>
-                            </div>
-                            <button class="btn btn-success w-100 mt-3" onclick="getDirections()">
-                                <i class="fas fa-directions me-2"></i>Get Directions
-                            </button>
+                    <!-- Market Info Card -->
+                    <div class="market-info-card bg-light p-4 rounded-4 shadow-sm">
+                        <h3 class="text-success mb-3">
+                            <i class="fas fa-map-marked-alt me-2"></i> Market Location
+                        </h3>
+                        <p class="mb-3 fs-5">
+                            <i class="fas fa-map-pin me-2 text-success"></i>
+                            Saad Zaghloul Street, next to Amir Cinema
+                        </p>
+                        
+                        <div class="market-hours mb-4">
+                            <h5 class="text-success">
+                                <i class="far fa-clock me-2"></i>Opening Hours:
+                            </h5>
+                            <ul class="list-unstyled">
+                                <li class="fs-5">
+                                    <span class="day">Saturday:</span> 8:00 AM - 3:00 PM
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <button class="btn btn-success btn-lg rounded-pill px-4 py-3" onclick="getDirections()">
+                            <i class="fas fa-directions me-2"></i>Get Directions
+                        </button>
+                    </div>
+                    
+                    <!-- Decorative Elements -->
+                    <div class="decorative-elements mt-4">
+                        <div class="d-flex justify-content-center">
+                            <i class="fas fa-leaf text-success me-3 fa-2x opacity-50"></i>
+                            <i class="fas fa-apple-alt text-success me-3 fa-2x opacity-50"></i>
+                            <i class="fas fa-carrot text-warning me-3 fa-2x opacity-50"></i>
+                            <i class="fas fa-seedling text-success fa-2x opacity-50"></i>
                         </div>
                     </div>
                 </div>
@@ -156,67 +262,51 @@
     </div>
 </div>
 
-<!-- Interactive Vendor Map Section -->
-<!-- <div class="container-xxl py-5" style="background: url('{% static 'images/wood-texture.jpg' %}') center/cover;">
-    <div class="container">
-        <div class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">
-            <h2 class="display-5 text-black">Farmers Market All Over The World 🌻</h2>
-            <p class="text-white-50 mb-0">Discover all the wonderful vendors at our farmer's market</p>
-        </div>
-        
-        <div class="row justify-content-center wow fadeInUp" data-wow-delay="0.3s">
-            <div class="col-lg-10">
-                <div class="position-relative rounded-4 overflow-hidden shadow-lg" style="background-color: rgba(255,255,255,0.9);">
-                    <img src="{% static 'images/cartoon-market-map.jpg' %}" alt="Farmer's Market Map" class="img-fluid w-100">
-                    
-                    Interactive Vendor Spots -->
-                    <!-- <div class="vendor-spot" style="top: 30%; left: 25%;" data-vendor="Organic Produce" data-category="produce">
-                        <div class="vendor-pin bg-success">
-                            <i class="fas fa-carrot"></i>
-                        </div>
-                        <div class="vendor-tooltip">
-                            <h6>Fresh Organic Produce</h6>
-                            <p>Seasonal fruits & vegetables</p>
-                            <small class="text-muted">Open until 3PM</small>
-                        </div>
-                    </div>
-                    <div class="vendor-spot" style="top: 45%; left: 60%;" data-vendor="Artisan Breads" data-category="bakery">
-                        <div class="vendor-pin bg-warning">
-                            <i class="fas fa-bread-slice"></i>
-                        </div>
-                        <div class="vendor-tooltip">
-                            <h6>Handcrafted Breads</h6>
-                            <p>Freshly baked daily</p>
-                            <small class="text-muted">Open until 2PM</small>
-                        </div>
-                    </div>
-                    <div class="vendor-spot" style="top: 65%; left: 40%;" data-vendor="Local Honey" data-category="dairy">
-                        <div class="vendor-pin bg-danger">
-                            <i class="fas fa-honey-pot"></i>
-                        </div>
-                        <div class="vendor-tooltip">
-                            <h6>Pure Local Honey</h6>
-                            <p>From our neighborhood bees</p>
-                            <small class="text-muted">Open until 3PM</small>
-                        </div>
-                    </div>
-                     -->
-                    <!-- Vendor Category Filter -->
-                    <!-- <div class="vendor-filter">
-                        <div class="btn-group" role="group">
-                            <button type="button" class="btn btn-sm btn-success active" data-filter="all">All</button>
-                            <button type="button" class="btn btn-sm btn-success" data-filter="produce">North America</button>
-                            <button type="button" class="btn btn-sm btn-success" data-filter="bakery">Aisa</button>
-                            <button type="button" class="btn btn-sm btn-success" data-filter="dairy">Africa</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> -->
-
 <style>
+    /* Import Google Fonts */
+    @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=Comfortaa:wght@300;400;500;600;700&display=swap');
+    
+    /* Tab Styling */
+    .tab-buttons {
+        margin-bottom: 2rem;
+    }
+    
+    .tab-button {
+        transition: all 0.3s ease;
+        border-radius: 25px !important;
+        padding: 12px 24px;
+        font-weight: 600;
+    }
+    
+    .tab-button.active {
+        background: linear-gradient(135deg, #689F38, #8BC34A) !important;
+        border-color: #689F38 !important;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(104, 159, 56, 0.3);
+    }
+    
+    .tab-button:not(.active):hover {
+        background-color: #689F38 !important;
+        border-color: #689F38 !important;
+        color: white !important;
+        transform: translateY(-1px);
+    }
+    
+    /* Tab Content */
+    .tab-content {
+        display: none;
+        animation: fadeIn 0.5s ease-in;
+    }
+    
+    .tab-content.active {
+        display: block;
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
     /* Contact Items */
     .contact-item {
         padding: 12px 15px;
@@ -229,90 +319,149 @@
         transform: translateX(5px);
     }
     
+    /* Main Title Styling */
+    .main-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 3.5rem;
+        font-weight: 700;
+        line-height: 1.2;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        margin-bottom: 0;
+        background: linear-gradient(135deg, #689F38, #8BC34A, #4CAF50);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    
+    .title-underline {
+        width: 120px;
+        height: 4px;
+        background: linear-gradient(135deg, #689F38, #8BC34A);
+        border-radius: 2px;
+        margin: 10px 0;
+        position: relative;
+    }
+    
+    .title-underline::after {
+        content: '';
+        position: absolute;
+        right: -20px;
+        top: -2px;
+        width: 8px;
+        height: 8px;
+        background: #689F38;
+        border-radius: 50%;
+    }
+    
+    /* Text Section Styling */
+    .text-section {
+        padding-left: 2rem;
+        min-height: 500px;
+    }
+    
+    .market-info-card {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%) !important;
+        border: 1px solid rgba(104, 159, 56, 0.2);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .market-info-card::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(104, 159, 56, 0.05) 0%, transparent 70%);
+        transition: all 0.3s ease;
+        z-index: 0;
+    }
+    
+    .market-info-card:hover::before {
+        transform: rotate(45deg);
+    }
+    
+    .market-info-card > * {
+        position: relative;
+        z-index: 1;
+    }
+    
+    .market-info-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(104, 159, 56, 0.2) !important;
+    }
+    
+    /* Market Hours Styling */
+    .market-hours .day {
+        font-weight: 600;
+        color: #689F38;
+        display: inline-block;
+        width: 100px;
+        font-family: 'Comfortaa', sans-serif;
+    }
+    
     /* Enhanced Map Container */
     .map-container {
         position: relative;
         height: 500px;
         overflow: hidden;
         border-radius: 12px;
-        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-    }
-    
-    .map-overlay {
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        width: 300px;
-        background: rgba(255,255,255,0.95);
-        border-radius: 12px;
-        padding: 20px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    }
-    
-    .market-info-card {
-        color: #333;
-    }
-    
-    .market-hours .day {
-        font-weight: 600;
-        color: #689F38;
-        display: inline-block;
-        width: 80px;
-    }
-    
-    /* Vendor Map Styles */
-    .vendor-spot {
-        position: absolute;
-        transform: translate(-50%, -50%);
-        cursor: pointer;
-        z-index: 10;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
         transition: all 0.3s ease;
     }
     
-    .vendor-pin {
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        border: 2px solid white;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-size: 14px;
+    .map-container:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.15);
     }
     
-    .vendor-tooltip {
-        position: absolute;
-        left: 50%;
-        bottom: calc(100% + 15px);
-        transform: translateX(-50%);
-        background: white;
-        padding: 12px;
-        border-radius: 8px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        width: 200px;
-        opacity: 0;
+    /* Button Styling */
+    .btn-success.btn-lg {
+        background: linear-gradient(135deg, #689F38, #8BC34A);
+        border: none;
+        font-family: 'Comfortaa', sans-serif;
+        font-weight: 500;
         transition: all 0.3s ease;
-        pointer-events: none;
+        position: relative;
+        overflow: hidden;
     }
     
-    .vendor-spot:hover .vendor-tooltip {
-        opacity: 1;
-        bottom: calc(100% + 20px);
-    }
-    
-    .vendor-tooltip h6 {
-        color: #689F38;
-        margin-bottom: 5px;
-    }
-    
-    .vendor-filter {
+    .btn-success.btn-lg::before {
+        content: '';
         position: absolute;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 10;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+        transition: all 0.6s ease;
+    }
+    
+    .btn-success.btn-lg:hover::before {
+        left: 100%;
+    }
+    
+    .btn-success.btn-lg:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(104, 159, 56, 0.4);
+    }
+    
+    /* Decorative Elements */
+    .decorative-elements i {
+        animation: float 3s ease-in-out infinite;
+        animation-delay: calc(var(--i) * 0.2s);
+    }
+    
+    .decorative-elements i:nth-child(1) { --i: 0; }
+    .decorative-elements i:nth-child(2) { --i: 1; }
+    .decorative-elements i:nth-child(3) { --i: 2; }
+    .decorative-elements i:nth-child(4) { --i: 3; }
+    
+    @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
     }
     
     /* Form Select Styling */
@@ -324,29 +473,133 @@
         background-size: 16px 12px;
     }
     
-    /* Responsive Adjustments */
+    /* Event Details Box */
+    .event-details {
+        transition: all 0.3s ease;
+    }
+    
+    .event-details.updated {
+        background-color: #d4edda !important;
+        border-color: #689F38 !important;
+        transform: scale(1.02);
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 992px) {
+        .text-section {
+            padding-left: 0;
+            padding-top: 2rem;
+            min-height: auto;
+        }
+        
+        .main-title {
+            font-size: 2.8rem;
+            text-align: center;
+        }
+        
+        .title-underline {
+            margin: 10px auto;
+        }
+        
+        .market-info-card {
+            text-align: center;
+        }
+        
+        .decorative-elements {
+            margin-top: 2rem !important;
+        }
+    }
+    
     @media (max-width: 768px) {
-        .map-overlay {
-            position: relative;
-            width: auto;
-            top: 0;
-            right: 0;
-            border-radius: 0 0 12px 12px;
+        .tab-button {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
         }
         
-        .vendor-pin {
-            width: 24px;
-            height: 24px;
-            font-size: 12px;
+        .main-title {
+            font-size: 2.2rem;
         }
         
-        .vendor-tooltip {
-            width: 160px;
+        .map-container {
+            height: 400px;
+        }
+        
+        .text-section {
+            padding: 1rem;
+        }
+    }
+    
+    @media (max-width: 576px) {
+        .main-title {
+            font-size: 1.8rem;
+        }
+        
+        .market-info-card {
+            padding: 1.5rem !important;
+        }
+        
+        .decorative-elements i {
+            font-size: 1.5rem !important;
         }
     }
 </style>
-
+{% include 'contactus/farmersATW.html' %}
 <script>
+    // Tab functionality
+    function openTab(evt, tabName) {
+        // Hide all tab contents
+        const tabContents = document.querySelectorAll('.tab-content');
+        tabContents.forEach(content => content.classList.remove('active'));
+        
+        // Remove active class from all tab buttons
+        const tabButtons = document.querySelectorAll('.tab-button');
+        tabButtons.forEach(button => button.classList.remove('active'));
+        
+        // Show the selected tab and mark button as active
+        document.getElementById(tabName).classList.add('active');
+        evt.currentTarget.classList.add('active');
+    }
+
+    // Event selection functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        const eventSelect = document.getElementById('event');
+        const eventDetails = document.querySelector('.event-details');
+        
+        // Event data (this would typically come from your Django context)
+        const eventData = {
+            {% for event in available_events %}
+            '{{ event.id }}': {
+                'description': '{{ event.eventDescription|escapejs }}',
+                'startDate': '{{ event.startDate|date:"M d, Y g:i A" }}',
+                'endDate': '{{ event.endDate|date:"M d, Y g:i A" }}',
+                'closeDate': '{{ event.eventClosedRegistartion|date:"M d, Y g:i A" }}'
+            }{% if not forloop.last %},{% endif %}
+            {% endfor %}
+        };
+        
+        if (eventSelect) {
+            eventSelect.addEventListener('change', function() {
+                const selectedEventId = this.value;
+                if (selectedEventId && eventData[selectedEventId]) {
+                    const event = eventData[selectedEventId];
+                    
+                    // Update event details
+                    document.getElementById('selected-event-description').textContent = event.description;
+                    document.getElementById('selected-event-start').textContent = event.startDate;
+                    document.getElementById('selected-event-end').textContent = event.endDate;
+                    document.getElementById('selected-event-close').textContent = event.closeDate;
+                    
+                    // Add visual feedback
+                    eventDetails.classList.add('updated');
+                    setTimeout(() => {
+                        eventDetails.classList.remove('updated');
+                    }, 1000);
+                }
+            });
+        }
+    });
+
     // Smart Map Features
     function getDirections() {
         if(navigator.geolocation) {
@@ -357,32 +610,9 @@
                 window.open(url, '_blank');
             });
         } else {
-            window.open('https://www.google.com/maps?q=Union+Square+Greenmarket', '_blank');
+            window.open('https://www.google.com/maps?q=31.1963183,29.9042166', '_blank');
         }
     }
-    
-    // Vendor filtering
-    document.addEventListener('DOMContentLoaded', function() {
-        const filterButtons = document.querySelectorAll('.vendor-filter button');
-        filterButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const filter = this.getAttribute('data-filter');
-                
-                // Update active button
-                filterButtons.forEach(btn => btn.classList.remove('active'));
-                this.classList.add('active');
-                
-                // Filter vendors
-                document.querySelectorAll('.vendor-spot').forEach(vendor => {
-                    if(filter === 'all' || vendor.getAttribute('data-category') === filter) {
-                        vendor.style.display = 'block';
-                    } else {
-                        vendor.style.display = 'none';
-                    }
-                });
-            });
-        });
-    });
 </script>
 
 {% endblock %}

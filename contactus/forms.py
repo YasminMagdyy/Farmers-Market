@@ -1,5 +1,5 @@
 from django import forms
-from .models import Contact
+from .models import Contact, Event, Attendee
 
 class ContactForm(forms.ModelForm):
     class Meta:
@@ -11,3 +11,18 @@ class ContactForm(forms.ModelForm):
             'subject': forms.TextInput(attrs={'class': 'form-control', 'id': 'subject', 'placeholder': 'Subject'}),
             'message': forms.Textarea(attrs={'class': 'form-control', 'id': 'message', 'placeholder': 'Leave a message here', 'style': 'height: 200px'}),
         }
+
+class EventRegistrationForm(forms.Form):
+    attendee_name = forms.CharField(max_length=50)
+    attendee_phone = forms.CharField(max_length=50)
+    event = forms.ModelChoiceField(
+        queryset=Event.objects.filter(eventRegistrationStatus = "OPEN_FOR_REGISTRATION"), label="Select Event"
+    )
+
+
+
+
+    
+
+
+

@@ -1,0 +1,133 @@
+
+.map-major-container {
+    /* Use a stylish fonr */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* Remove margins created by default making the body take take the screen from edge to edge */
+    margin: 0;
+    padding: 0;
+    /* add a light grey for the background of the body */
+    background: #fff;
+    /* add a text in black color */
+    color: #333;
+    /* make the parent "body" a flex container meaning we can use the flex layout model */
+    display: flex;
+    /* by default flex boxes arrange their childer from left to right in a row fromate but we want to style it in a column manner */
+    flex-direction: column;
+    /* center elements horizontally */
+    align-items: center;
+    /* make the body 100% view port  */
+    min-height: 100vh;
+
+}
+
+
+
+#map {
+    /* setting the map height using the 80% of the view port and subtract from it 100 px */
+    height: calc(80vh - 100px);
+    /* make the width 90% of its parent */
+    width: 90%;
+    /* but prevent the child from having more than 1200 px */
+    max-width: 1200px;
+    /* reduce the edge  */
+    border-radius: 12px;
+    /* hide anything spilling out from the maps boarder */
+    overflow: hidden;
+    /* add a box shadow */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    /* add a white background */
+    background: #fff;
+    /* incase of any property change make a fading transition */
+    transition: all 0.3s ease;
+    /* add a boarder to the left */
+    border-left: 8px solid #6D4C41;
+}
+
+.leaflet-tooltip {
+    /* make the position marker's tooltip with a gradient greem */
+    background: linear-gradient(135deg, #689F38, #8BC34A);
+    /* text inside the gradient while */
+    color: #fff;
+    /* no borders */
+    border: none;
+    /* make the borders of the tool tipe rounded */
+    border-radius: 8px;
+    /* make padding from the top and the bottom */
+    padding: 8px 12px;
+    /* font size and boldness */
+    font-size: 14px;
+    font-weight: 600;
+    /* add shadow to the tooltip */
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+    /* opacity of the green box of the tool tip */
+    opacity: 0.9;
+    /*  the animation of the tool tip */
+    animation: fadeIn 0.3s ease-in;
+}
+/* add a pseudo element before the tooltip */
+.leaflet-tooltip::before {
+    border-top-color: #689F38;
+}
+
+.leaflet-marker-icon {
+    transition: transform 0.3s ease;
+}
+
+.leaflet-marker-icon:hover {
+    transform: scale(1.2);
+}
+
+
+.map-search {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.map-search input {
+    /* padding around the inside of the element */
+    padding: 8px 12px;
+    /* make the border a solid color of green with a tickness of 1px */
+    border: 1px solid #689F38;
+    /* make the boarder edges rounded */
+    border-radius: 8px;
+    /* make the font size */
+    font-size: 14px;
+    /* make the width of the */
+    width: 200px;
+}
+
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 0.9; transform: translateY(0); }
+}
+
+/* when the screen width becomes around 800px */
+
+@media (max-width: 768px) {
+    h2 {
+        font-size: 1.8rem;
+    }
+
+    /* map dimensions become 95% of its parents width and 60% of the view port*/
+    #map {
+        width: 95%;
+        height: 60vh;
+    }
+
+    /* reduce change the fontsize and the padding */
+
+    .leaflet-tooltip {
+        font-size: 12px;
+        padding: 6px 8px;
+    }
+
+    /* size of the search */
+    .map-search input {
+        width: 150px;
+    }
+
+
+}

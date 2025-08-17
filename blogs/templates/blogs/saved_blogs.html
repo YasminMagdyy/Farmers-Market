@@ -1,0 +1,41 @@
+{% extends 'blogs/base.html' %}
+{% load static %}
+
+{% block title %}My Saved Blogs{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'blogs/css/saved_blogs.css' %}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="saved-blogs-container">
+    <h1><span class="material-icons-round">bookmark</span> My Saved Blogs</h1>
+
+    {% if saved_blogs %}
+    <div class="saved-blogs-grid">
+        {% for blog in saved_blogs %}
+        <div class="blog-card">
+            <a href="{% url 'blog_detail' blog.id %}">
+                <div class="blog-image">
+                    <img src="{{ blog.main_image.url }}" alt="{{ blog.name }}">
+                </div>
+                <div class="blog-content">
+                    <h3>{{ blog.name }}</h3>
+                    <div class="blog-meta">
+                        <span class="material-icons-round">event</span>
+                        {{ blog.created_date|date:"F j, Y" }}
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="no-saved-blogs">
+        <p>You haven't saved any blogs yet.</p>
+        <a href="{% url 'blog_list' %}" class="btn">Browse Blogs</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

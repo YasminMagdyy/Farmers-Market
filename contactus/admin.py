@@ -1,3 +1,6 @@
 from django.contrib import admin
+from .models import  Attendee, EventAttendee
 
-# Register your models here.
+
+admin.site.register(Attendee)
+admin.site.register(EventAttendee)

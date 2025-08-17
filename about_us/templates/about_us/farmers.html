@@ -599,10 +599,10 @@
     </div>
     
     <div class="cards-wrapper">
-      <div class="card active" data-content="<h3 class='content-title'>Feel the Farm Spirit!</h3><p class='content-text'>Bask in the sunlit bustle of the market, where the air hums with laughter and the scent of fresh earth. Connect with growers sharing their harvest’s heart—every Saturday, it’s a celebration of community! 🌾 <br><span class='content-tags'>#MarketVibes #CommunityLove</span></p>">
+      <div class="card active" data-content="<h3 class='content-title'>Feel the Farm Spirit!</h3><p class='content-text'>Bask in the sunlit bustle of the market, where the air hums with laughter and the scent of fresh earth. Connect with growers sharing their harvest's heart—every Thursday, it's a celebration of community! 🌾 <br><span class='content-tags'>#MarketVibes #CommunityLove</span></p>">
         <img class="card-image" src="{% static 'images/f.jpg' %}" alt="Card 1 Image">
       </div>
-      <div class="card" data-content="<h3 class='content-title'>Embrace Nature’s Rhythm!</h3><p class='content-text'>Step into a world where soil whispers stories—watch hands craft jams, taste the sun in every bite, and feel the pulse of sustainable living. Join the harmony every week! 🌱 <br><span class='content-tags'>#EarthyJoy #SustainableSoul</span></p>">
+      <div class="card" data-content="<h3 class='content-title'>Embrace Nature's Rhythm!</h3><p class='content-text'>Step into a world where soil whispers stories—watch hands craft jams, taste the sun in every bite, and feel the pulse of sustainable living. Join the harmony every week! 🌱 <br><span class='content-tags'>#EarthyJoy #SustainableSoul</span></p>">
         <img class="card-image" src="{% static 'images/f2.jpg' %}" alt="Card 2 Image">
       </div>
       <div class="card" data-content="<h3 class='content-title'>Savor the Local Beat!</h3><p class='content-text'>Lose yourself in the colorful chaos of fresh picks—orchard apples, vibrant greens, and egg-yolk golds—where every stall sings of tradition and togetherness. Come feel the vibe! 🍎 <br><span class='content-tags'>#LocalRhythm #FreshEnergy</span></p>">
@@ -620,58 +620,33 @@
       <h2>🌱 Our Dedicated Farmers</h2>
       <p>Meet the passionate growers who bring fresh, local produce to your table</p>
     </div>
-    
-    <div class="farmers-grid">
-      <div class="farmer-card" onclick="openFarmerModal('Ali Kamal Ali', 'Butcher', '', 'Ali Kamal Ali , widely known as Taha the Butcher He has been with us since the very beginning of our journey.Mr. Taha is one of the farmers who started with a small quantity and a limited variety of products. Over time, he has expanded his offerings significantly due to the high demand for his meat products.Mr. Taha often remarks that he never imagined the market would boost his business to this extent, which motivates him to increase his products every week.', '{% get_static_prefix %}images/farmer1.jpg', 'Butcher')">
-        <div class="farmer-badge">Butcher</div>
-        <div class="farmer-img" style="background-image: url('{% static 'images/farmer1.jpg' %}')"></div>
-        <div class="farmer-info">
-          <h3>Ali Kamal Ali</h3>
-          <p class="specialty">Butcher</p>
-          <div class="farmer-footer">
-            <span class="click-me">Meet Ali →</span>
-          </div>
-        </div>
-      </div>
-      
-      <div class="farmer-card" onclick="openFarmerModal('Engineer Nadia Noah ', '', '', 'She joined our Farmers\' Market because it\'s more than just a typical market.We prioritize community benefit in all aspects, including education and knowledge sharing. Eng. Nadia specializes in organic fertilizers and their production from vegetable waste.She also provides valuable lectures at the market on fertilizers, seeds, and farming techniques, aiming to maximize the benefits for our visitors. Eng.Nadia expressed her great pleasure in being part of the Farmers\' Market, as it has provided her with a significant opportunity to showcase her work to a wider audience and share agricultural knowledge with both children and adults.Eng. Nadia Noah started with us in week 16 and continues to be an integral part of our market as we grow and evolve to better serve you.', '{% get_static_prefix %}images/farmer2.jpg', 'Plants')">
-        <div class="farmer-badge">Plants</div>
-        <div class="farmer-img" style="background-image: url('{% static 'images/farmer2.jpg' %}')"></div>
-        <div class="farmer-info">
-          <h3>Engineer Nadia Noah </h3>
-          <p class="specialty">Plants</p>
-          <div class="farmer-footer">
-            <span class="click-me">Meet Eng Nadia →</span>
-          </div>
-        </div>
-      </div>
-      
-      <div class="farmer-card" onclick="openFarmerModal('Rawda and Hosna', '', '', 'Rawda Zeidan and Hosna Zeidan They have been with us since the start and have become well-known at the market for their delicious homemade dairy products and traditional baked goods. Rawda and Hosna embody the spirit of the authentic Egyptian woman who works hard and perseveres. The Farmers\' Market marked a new beginning and opened a new door of opportunity for them.', '{% get_static_prefix %}images/farmer3.jpg', 'Dairy and Bakery Product')">
-        <div class="farmer-badge">Rawda Zeidan and Hosna Zeidan</div>
-        <div class="farmer-img" style="background-image: url('{% static 'images/farmer3.jpg' %}')"></div>
-        <div class="farmer-info">
-          <h3>Rawda and Hosna</h3>
-          <p class="specialty">Dairy and Bakery Products</p>
-          <div class="farmer-footer">
-            <span class="click-me">Meet Them →</span>
-          </div>
-        </div>
-      </div>
-      
-      <div class="farmer-card" onclick="openFarmerModal('Ayman El-Hassawy', '', '', 'He is a prominent farmer in the Farmers\' Market and the Abis area. He is well-known in the market for his fresh, high-quality vegetables. Ayman has been with us since the first week and continues to be a regular participant. Following the significant success he has experienced through the market, Mr.Ayman has also started bringing his children along to help him.', '{% get_static_prefix %}images/f2-removebg-preview.png', 'Vegetables')">
-        <div class="farmer-badge">Pasture Raised</div>
-        <div class="farmer-img" style="background-image: url('{% static 'images/f2-removebg-preview.png' %}')"></div>
-        <div class="farmer-info">
-          <h3>Ayman El-Hassawy</h3>
-          <p class="specialty">Vegetable</p>
-          <div class="farmer-footer">
-            <span class="click-me">Meet Ayman →</span>
-          </div>
+     <!-- Farmer Divs -->
+ 
+{% load static %}
+<div class="farmers-grid">
+{% for farmer in farmers %}
+    <div class="farmer-card"
+         onclick="openFarmerModal('{{ farmer.farmerName|escapejs }}',
+                                   '{{ farmer.farmerSpecialization.specialization|escapejs }}',
+                                   '🌱',
+                                   '{{ farmer.farmerBreif|escapejs }}',
+                                   '{% static 'images/' %}{{ farmer.farmerImage }}',
+                                   '{{ farmer.farmerSpecialization.specialization|escapejs }}')">
+      <div class="farmer-badge">{{ farmer.farmerSpecialization.specialization }}</div>
+      <div class="farmer-img" style="background-image: url('{% static 'images/' %}{{ farmer.farmerImage }}');"></div>
+
+      <div class="farmer-info">
+        <h3>{{ farmer.farmerName }}</h3>
+        <p class="specialty">{{ farmer.farmerSpecialization.specialization }}</p>
+        <div class="farmer-footer">
+          <span class="click-me">Meet {{ farmer.farmerName.split.0 }} →</span>
         </div>
       </div>
     </div>
+{% endfor %}
+ </div>
+ </div>
   </div>
-</div>
 
 <div id="farmerModal" class="farmer-modal">
   <div class="farmer-modal-content">
@@ -778,7 +753,7 @@
     });
   });
 
-  // Farmer Modal Script
+  // Farmer Modal Script - FIXED VERSION
   function openFarmerModal(name, specialty, emoji, bio, imageUrl, badge) {
     document.getElementById('modalName').textContent = name;
     document.getElementById('modalRole').textContent = `${emoji} ${specialty}`;

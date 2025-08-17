@@ -1,0 +1,118 @@
+{% load static %}
+<head>
+    <title>Farmers' Markets Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+    <link rel="stylesheet" href="{% static 'css/farmersATW.css' %}">
+</head>
+<div class="map-major-container">
+    <h2 class="display-5 mb-3" style="margin-top: 20px;margin-bottom: 30px;"> Farmers Market Around the WORLD! </h2>
+    <div id="map" role="region" aria-label="Interactive map of farmers' markets by country"></div>
+
+    <!-- Load Leaflet synchronously to ensure L is defined -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js" defer></script>
+    <script>
+        // Wait for DOM and Leaflet to be fully loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof L === 'undefined') {
+                console.error('Leaflet library failed to load');
+                return;
+            }
+
+            // Farmers' market data
+            const marketsData = [
+                { country: "United States", markets: 8500, lat: 37.0902, lng: -95.7129 },
+                { country: "Canada", markets: 1200, lat: 56.1304, lng: -106.3468 },
+                { country: "France", markets: 900, lat: 46.2276, lng: 2.2137 },
+                { country: "Germany", markets: 750, lat: 51.1657, lng: 10.4515 },
+                { country: "Brazil", markets: 500, lat: -14.2350, lng: -51.9253 }
+            ];
+
+            // Initialize the map
+            const map = L.map('map', {
+                keyboard: true,
+                zoomAnimation: true,
+                fadeAnimation: true
+            }).setView([20, 0], 2);
+
+            // Add CartoDB Voyager tiles
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+                subdomains: 'abcd',
+                maxZoom: 19
+            }).addTo(map);
+
+            // Custom marker icon
+            const greenIcon = L.icon({
+                iconUrl: "{% static 'images/fruit.png' %}", // put the correct relative path here
+                iconSize: [36, 36],
+                iconAnchor: [18, 36],
+                popupAnchor: [0, -36],
+                shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+                shadowSize: [36, 36]
+            });
+
+
+            // Add marker clustering
+            const markers = L.markerClusterGroup({
+                iconCreateFunction: function(cluster) {
+                    return L.divIcon({
+                        html: `<div style="background: linear-gradient(135deg, #689F38, #8BC34A); color: white; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; font-weight: bold;">${cluster.getChildCount()}</div>`,
+                        className: 'custom-cluster',
+                        iconSize: [40, 40]
+                    });
+                }
+            });
+
+            // Add markers with tooltips
+            marketsData.forEach((item, index) => {
+                setTimeout(() => {
+                    const marker = L.marker([item.lat, item.lng], { icon: greenIcon })
+                        .bindTooltip(`<b>${item.country}</b><br>Markets: ${item.markets}`, { direction: 'top', offset: [0, -10] })
+                        .setOpacity(0);
+                    markers.addLayer(marker);
+                    // Check if animate is supported (fallback for older browsers)
+                    if (marker.animate) {
+                        marker.animate({ opacity: 1 }, { duration: 500 });
+                    } else {
+                        marker.setOpacity(1);
+                    }
+                }, index * 100);
+            });
+
+            map.addLayer(markers);
+
+            // Add map animation on load
+            map.whenReady(() => {
+                const mapElement = document.getElementById('map');
+                mapElement.style.opacity = '0';
+                setTimeout(() => {
+                    mapElement.style.transition = 'opacity 1s ease';
+                    mapElement.style.opacity = '1';
+                }, 100);
+            });
+
+            // Add search, legend, and CTA
+            const searchInput = document.createElement('div');
+            searchInput.className = 'map-search';
+            searchInput.innerHTML = '<input type="text" id="marketSearch" placeholder="Search for a country..." aria-label="Search farmers\' markets by country">';
+            document.getElementById('map').insertAdjacentElement('beforeend', searchInput);
+
+
+            // Search functionality
+            document.getElementById('marketSearch').addEventListener('input', function(e) {
+                const searchTerm = e.target.value.toLowerCase();
+                markers.eachLayer(layer => {
+                    const country = layer.getTooltip().getContent().toLowerCase();
+                    const markerElement = layer.getElement();
+                    if (markerElement) {
+                        markerElement.style.display = country.includes(searchTerm) ? 'block' : 'none';
+                    }
+                });
+            });
+        });
+    </script>
+
+</div>

@@ -42,41 +42,21 @@
     </div>
 
     <!-- Employee level (6 people) -->
-    <div class="tree-level">
-      <div class="person"
-           onclick='openModal("Mahmoud Mohamed Nagib", "Market Staff", "{% static "images/MahmoudMohamedNagib.png" %}", "")'>
-        <div class="avatar"><img src="{% static 'images/MahmoudMohamedNagib.png' %}" alt="Taylor Smith"></div>
-        <div class="name">Mahmoud Mohamed Nagib</div>
-        <div class="role">Market Staff</div>
-      </div>
 
-      <div class="person"
-           onclick='openModal("Hadeer Adbel Hameed", "Market Staff", "{% static "images/Hadeer (2).png" %}", "")'>
-        <div class="avatar"><img src="{% static 'images/Hadeer (2).png' %}" alt="Morgan Lee"></div>
-        <div class="name">Hadeer Abdel Hameed</div>
-        <div class="role">Market Staff</div>
-      </div>
 
-      <div class="person"
-           onclick='openModal("Mohamed El Sayed Mohamed", "Market Staff", "{% static "images/Mohamed El Sayed Mohamed.png" %}", "")'>
-        <div class="avatar"><img src="{% static 'images/Mohamed El Sayed Mohamed.png' %}" alt="Riley Jones"></div>
-        <div class="name">Mohamed El Sayed Mohamed</div>
-        <div class="role">Market Staff</div>
+  <div class="tree-level">
+    {% for employee in employees %}
+    <div class="person"
+         onclick="openModal('{{ employee.memberName }}', '{{ employee.memberBrief }}', '{% static 'images/' %}{{ employee.memberPhoto }}', '')">
+      <div class="avatar">
+        <img src="{% static 'images/' %}{{ employee.memberPhoto }}" alt="{{ employee.memberName }}">
       </div>
+      <div class="name">{{ employee.memberName }}</div>
+      <div class="role">{{ employee.memberPosition }}</div>
+    </div>
+  {% endfor %}
+  </div>
 
-      <div class="person"
-           onclick='openModal("Ahmed Abd El Moneam", "Market Staff", "{% static "images/Ahmed Abd El Moneam.png" %}", "")'>
-        <div class="avatar"><img src="{% static 'images/Ahmed Abd El Moneam.png' %}" alt="Casey Brown"></div>
-        <div class="name">Ahmed Abd El Moneam</div>
-        <div class="role">Market Staff</div>
-      </div>
-
-      <div class="person"
-           onclick='openModal("Mohamed Hesham Mahmoud", "Market Staff", "{% static "images/Mohamed Hesham Mahmoud.png" %}", "")'>
-        <div class="avatar"><img src="{% static 'images/Mohamed Hesham Mahmoud.png' %}" alt="Jordan White"></div>
-        <div class="name">Mohamed Hesham Mahmoud</div>
-        <div class="role">Market Staff</div>
-      </div>
 
     </div>
   </div>
