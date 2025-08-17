@@ -9,6 +9,7 @@ from django.utils import timezone
 import json
 from django.core import serializers
 from eventHandler.tasks import update_event_statuses, send_event_notifications
+from django.shortcuts import get_object_or_404
 
 def home(request):
     current_time = timezone.now()
@@ -28,13 +29,78 @@ def home(request):
         'ads_json': json.dumps(ads_list)  # Convert to JSON string
     })
 
-def blog_list(request):
-    blogs = Blog.objects.all()
-    return render(request, 'blogs/blog_list.html', {'blogs': blogs})
+def blog_list(request): 
+    blogs = Blog.objects.all().order_by('-created_date')
+    selected_category = request.GET.get('category')
+    selected_date = request.GET.get('date')
+    
+    # Apply filters
+    if selected_category in ['ceremony', 'visit']:
+        blogs = blogs.filter(category=selected_category)
+    
+    if selected_date:
+        try:
+            # Convert the date string to a date object
+            from datetime import datetime
+            date_obj = datetime.strptime(selected_date, '%Y-%m-%d').date()
+            blogs = blogs.filter(created_date=date_obj)
+        except (ValueError, TypeError):
+            # Handle invalid date format
+            pass
+    
+    # Get all unique dates for the filter sidebar
+    all_dates = Blog.objects.dates('created_date', 'day', order='DESC')
+    
+    # Get all visit blogs for the sidebar
+    visit_blogs = Blog.objects.filter(category='visit').order_by('-created_date')
+    
+    # Get all ceremony blogs for the sidebar
+    ceremony_blogs = Blog.objects.filter(category='ceremony').order_by('-created_date')
+    
+    return render(request, 'blogs/blog_list.html', {
+        'blogs': blogs,
+        'selected_category': selected_category,
+        'selected_date': selected_date,
+        'all_dates': all_dates,
+        'visit_blogs': visit_blogs,
+        'ceremony_blogs': ceremony_blogs
+    })
 
 def blog_detail(request, blog_id):
-    blog = Blog.objects.get(id=blog_id)
-    return render(request, 'blogs/blog_detail.html', {'blog': blog})
+    blog = get_object_or_404(Blog, pk=blog_id)
+    
+    # Get related blogs by category only (tags removed)
+    related_blogs = Blog.objects.filter(
+        category=blog.category
+    ).exclude(
+        pk=blog.pk
+    ).order_by('-created_date')
+    
+    # Limit to 6 related blogs for better display
+    related_blogs = related_blogs[:6]
+    
+    context = {
+        'blog': blog,
+        'related_blogs': related_blogs,
+    }
+    return render(request, 'blogs/blog_detail.html', context)
+
+@login_required
+@require_POST
+def toggle_save_blog(request, pk):
+    blog = get_object_or_404(Blog, pk=pk)
+    if request.user in blog.saved_by.all():
+        blog.saved_by.remove(request.user)
+        saved = False
+    else:
+        blog.saved_by.add(request.user)
+        saved = True
+    return JsonResponse({'saved': saved})
+
+@login_required
+def saved_blogs(request):
+    saved_blogs = request.user.saved_blogs.all().order_by('-created_date')
+    return render(request, 'blogs/saved_blogs.html', {'saved_blogs': saved_blogs})
 
 
 def subscribe_view(request):

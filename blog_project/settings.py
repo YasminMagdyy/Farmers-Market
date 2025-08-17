@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+    'markdownify.apps.MarkdownifyConfig',
     # Custom apps - use ONLY ONE format per app
     'blogs.apps.BlogsConfig',          # Preferred explicit config
     'contactus.apps.ContactusConfig',  # Keep this, remove bare 'contactus'

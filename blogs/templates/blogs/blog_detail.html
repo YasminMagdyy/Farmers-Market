@@ -5,39 +5,145 @@
 
 {% block extra_css %}
     <link rel="stylesheet" href="{% static 'blogs/css/blog_detail.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <!-- Add elegant fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
 <div class="blog-detail fade-in">
-    <a href="{% url 'blog_list' %}" class="back-link">
-        <i class="fas fa-arrow-left me-2"></i> Back to Blogs
-    </a>
-    
     <div class="blog-header">
-        <h1><i class="fas fa-newspaper me-3"></i>{{ blog.name }}</h1>
+        <div class="header-top">
+            <a href="{% url 'blog_list' %}" class="back-link">
+                <span class="material-icons-round">arrow_back</span> Back to Blogs
+            </a>
+            {% if user.is_authenticated %}
+            <button class="save-btn" data-blog-id="{{ blog.id }}">
+                <span class="material-icons-round">{% if user in blog.saved_by.all %}bookmark{% else %}bookmark_border{% endif %}</span>
+                <span class="save-text">{% if user in blog.saved_by.all %}Saved{% else %}Save for Later{% endif %}</span>
+            </button>
+            {% endif %}
+        </div>
+        <h1>{{ blog.name }}</h1>
         <div class="blog-meta">
-            <span><i class="far fa-calendar-alt me-1"></i> {{ blog.created_date }}</span>
+            <span><span class="material-icons-round">event</span> {{ blog.created_date|date:"F j, Y" }}</span>
         </div>
     </div>
     
-    <div class="blog-image-container">
-        <img src="{{ blog.image.url }}" alt="{{ blog.name }}" class="detail-image">
-        <div class="image-caption">
-            <i class="fas fa-camera me-2"></i> Featured Image
+    <div class="blog-image-slider">
+        {% for image in blog.images.all %}
+        <div class="slide">
+            <img src="{{ image.image.url }}" alt="{{ blog.name }}" class="detail-image">
+            {% if image.caption %}
+            <div class="image-caption">
+                <span class="material-icons-round">photo_camera</span> {{ image.caption }}
+            </div>
+            {% endif %}
         </div>
+        {% endfor %}
     </div>
+    
+    {% load markdownify %}
     
     <div class="blog-content">
-        <p><i class="fas fa-paragraph me-2"></i>{{ blog.description }}</p>
-    </div>
-    
-    <div class="blog-footer">
-        <div class="tags">
-            <i class="fas fa-tags me-2"></i>
-            <span class="badge bg-success">Organic</span>
-            <span class="badge bg-primary">Farmers</span>
-            <span class="badge bg-warning">Healthy</span>
+        <div class="description-container">
+            <span class="material-icons-round">article</span>
+            <div class="description-text">
+                {{ blog.description|markdownify }}
+            </div>
         </div>
     </div>
+
+    {% if relatd_blogs %}
+    <div class="related-blogs">
+        <div class="related-header">
+            <h3 class="related-title">
+                <span class="material-icons-round">recommend</span>
+                You May Also Like
+            </h3>
+        </div>
+        <div class="related-blogs-grid">
+            {% for blog in related_blogs %}
+            <div class="related-blog-card-wrapper">
+                <a href="{% url 'blog_detail' blog.id %}" class="related-blog-card">
+                    <div class="related-blog-image">
+                        <img src="{{ blog.main_image.url }}" alt="{{ blog.name }}" loading="lazy">
+                    </div>
+                    <div class="related-blog-content">
+                        <h4>{{ blog.name }}</h4>
+                        <div class="related-blog-meta">
+                            <span class="material-icons-round">event</span> 
+                            {{ blog.created_date|date:"F j, Y" }}
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
 </div>
 {% endblock %}
+
+{% block extra_js %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+<script>
+$(document).ready(function(){
+    // Initialize the slider
+    $('.blog-image-slider').slick({
+        dots: true,
+        infinite: true,
+        speed: 500,
+        fade: true,
+        cssEase: 'linear',
+        autoplay: true,
+        autoplaySpeed: 3000
+    });
+
+    // Save button functionality
+    $('.save-btn').click(function(e){
+        e.preventDefault();
+        const blogId = $(this).data('blog-id');
+        const button = $(this);
+        
+        $.ajax({
+            url: "{% url 'toggle_save_blog' 0 %}".replace('0', blogId),
+            method: "POST",
+            headers: {
+                "X-CSRFToken": "{{ csrf_token }}"
+            },
+            dataType: 'json',
+            success: function(response) {
+                if (response.saved) {
+                    button.find('.material-icons-round').text('bookmark');
+                    button.find('.save-text').text('Saved');
+                    button.css({
+                        'background-color': 'rgba(93, 138, 102, 0.2)',
+                        'box-shadow': '0 4px 15px rgba(93, 138, 102, 0.25)'
+                    });
+                } else {
+                    button.find('.material-icons-round').text('bookmark_border');
+                    button.find('.save-text').text('Save for Later');
+                    button.css({
+                        'background-color': 'rgba(93, 138, 102, 0.1)',
+                        'box-shadow': '0 2px 10px rgba(0,0,0,0.05)'
+                    });
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("Error saving blog:", error);
+                if (xhr.status === 403) {
+                    alert('Please login to save blogs');
+                    window.location.href = '/accounts/login/?next=' + window.location.pathname;
+                }
+            }
+        });
+    });
+});
+</script>
+{% endblock %}
+    
