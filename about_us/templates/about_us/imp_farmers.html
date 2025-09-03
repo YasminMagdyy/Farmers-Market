@@ -1,1 +1,334 @@
-{% include 'about_us/farmers.html'%}
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        :root {
+            --primary-green: #2e7d32;
+            --dark-green: #1b5e20;
+            --light-green: #81c784;
+            --cream: #f5f5f5;
+            --text-dark: #333;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9f9f9;
+        }
+
+        .cards-section {
+            position: relative;
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 60px;
+        }
+
+        .section-title {
+            text-align: center;
+            color: var(--dark-green);
+            margin-bottom: 2rem;
+            font-size: 2.2rem;
+        }
+
+        .cards-container {
+            display: flex;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            gap: 30px;
+            padding: 30px 0;
+            scrollbar-width: none; /* Hide scrollbar for Firefox */
+        }
+
+        .cards-container::-webkit-scrollbar {
+            display: none; /* Hide scrollbar for Chrome/Safari */
+        }
+
+        .card {
+            min-width: 320px;
+            height: 450px;
+            perspective: 1200px;
+            flex-shrink: 0;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+
+        .card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front,
+        .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            overflow: hidden;
+        }
+
+        .flip-card-front {
+            background-color: var(--cream);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .flip-card-back {
+            background: linear-gradient(135deg, var(--primary-green), var(--dark-green));
+            color: white;
+            transform: rotateY(180deg);
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .farmer-image {
+            width: 100%;
+            height: 380px;
+            object-fit: cover;
+            border-bottom: 4px solid var(--light-green);
+        }
+
+        .card-title {
+            padding: 20px;
+            text-align: center;
+            margin: 0;
+            color: var(--text-dark);
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+
+        .farmer-name {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            text-align: center;
+            color: white;
+            font-weight: 700;
+        }
+
+        .farmer-location {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            color: var(--light-green);
+            font-size: 1rem;
+        }
+
+        .farmer-story {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .farm-details {
+            display: flex;
+            justify-content: space-around;
+            margin-top: auto;
+            background: rgba(255,255,255,0.1);
+            padding: 12px;
+            border-radius: 8px;
+        }
+
+        .detail-item {
+            text-align: center;
+        }
+
+        .detail-value {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .detail-label {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        .arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--primary-green);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+            z-index: 10;
+        }
+
+        .arrow:hover {
+            background: var(--dark-green);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .arrow.left { left: 0; }
+        .arrow.right { right: 0; }
+
+        /* Decorative elements */
+        .corner-decoration {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="%2381c784"><path d="M50 0 L100 50 L50 100 L0 50 Z"/></svg>');
+            background-size: contain;
+            opacity: 0.2;
+        }
+
+        .top-left { top: 10px; left: 10px; }
+        .bottom-right { bottom: 10px; right: 10px; transform: rotate(180deg); }
+    </style>
+</head>
+<body>
+    <section class="cards-section">
+        <h2 class="section-title">Meet Our Farmers</h2>
+        <button class="arrow left" onclick="scroll(-350)">❮</button>
+        <button class="arrow right" onclick="scroll(350)">❯</button>
+        
+        <div class="cards-container">
+            <!-- Farmer 1 -->
+            <div class="card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <img class="farmer-image" src="{% static 'images/f1.jpg' %}" alt="Farmer John">
+                        <h3 class="card-title">Organic Vegetable Farm</h3>
+                    </div>
+                    <div class="flip-card-back">
+                        <div class="corner-decoration top-left"></div>
+                        <div class="corner-decoration bottom-right"></div>
+                        <h4 class="farmer-name">John Peterson</h4>
+                        <div class="farmer-location">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                            Springfield, Iowa
+                        </div>
+                        <p class="farmer-story">
+                            "After 20 years in corporate America, I returned to my roots. Our family farm now grows organic vegetables for 150 local families. The transition to sustainable farming was challenging but rewarding."
+                        </p>
+                        <div class="farm-details">
+                            <div class="detail-item">
+                                <div class="detail-value">12</div>
+                                <div class="detail-label">Years</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-value">50</div>
+                                <div class="detail-label">Acres</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-value">30+</div>
+                                <div class="detail-label">Crops</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Farmer 2 -->
+            <div class="card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <img class="farmer-image" src="{% static 'images/f1.jpg' %}" alt="Farmer Maria">
+                        <h3 class="card-title">Dairy Farm</h3>
+                    </div>
+                    <div class="flip-card-back">
+                        <div class="corner-decoration top-left"></div>
+                        <div class="corner-decoration bottom-right"></div>
+                        <h4 class="farmer-name">Maria Gonzalez</h4>
+                        <div class="farmer-location">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                            Madison, Wisconsin
+                        </div>
+                        <p class="farmer-story">
+                            "Our dairy farm has been in the family for three generations. We pride ourselves on ethical treatment of our cows and sustainable practices. Our secret? Happy cows make the best milk!"
+                        </p>
+                        <div class="farm-details">
+                            <div class="detail-item">
+                                <div class="detail-value">65</div>
+                                <div class="detail-label">Cows</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-value">3rd</div>
+                                <div class="detail-label">Generation</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-value">100%</div>
+                                <div class="detail-label">Grass-fed</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Farmer 3 -->
+            <div class="card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <img class="farmer-image" src="{% static 'images/f3.jpg' %}" alt="Farmer Ahmed">
+                        <h3 class="card-title">Date Palm Farm</h3>
+                    </div>
+                    <div class="flip-card-back">
+                        <div class="corner-decoration top-left"></div>
+                        <div class="corner-decoration bottom-right"></div>
+                        <h4 class="farmer-name">Ahmed Al-Mansoori</h4>
+                        <div class="farmer-location">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                            Al Ain, UAE
+                        </div>
+                        <p class="farmer-story">
+                            "In the desert, we've perfected water conservation techniques passed down for centuries. Our dates are grown with minimal water usage, proving that traditional methods can be sustainable."
+                        </p>
+                        <div class="farm-details">
+                            <div class="detail-item">
+                                <div class="detail-value">800</div>
+                                <div class="detail-label">Trees</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-value">5</div>
+                                <div class="detail-label">Varieties</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-value">90%</div>
+                                <div class="detail-label">Less water</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function scroll(offset) {
+            const container = document.querySelector('.cards-container');
+            container.scrollBy({
+                left: offset,
+                behavior: 'smooth'
+            });
+        }
+    </script>
+</body>
+</html>

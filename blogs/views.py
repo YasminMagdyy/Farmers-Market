@@ -31,9 +31,9 @@ def subscribe_view(request):
                 created = True
 
             if created:
-                messages.success(request, 'تمام! تم حفظ بريدك بنجاح 😊')
+                messages.success(request, 'ٍSuccessfully Saved😊')
             else:
-                messages.info(request, 'هذا البريد مسجل بالفعل.')
+                messages.info(request, 'This mail is already registered.')
             return redirect(request.META.get('HTTP_REFERER', '/'))
     return redirect('/')
 

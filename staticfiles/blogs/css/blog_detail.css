@@ -1,0 +1,130 @@
+.blog-detail {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+/* Add to existing blog_detail.css or create if doesn't exist */
+.blog-detail {
+    border-left: 8px solid #4CAF50; /* Thicker green left border */
+    padding: 25px;
+    background-color: white; /* Optional light background */
+    border-radius: 0 10px 10px 10px; /* Rounded corners except top-left */
+    margin: 20px 0;
+}
+
+.detail-image {
+    border-left: 4px solid #4CAF50; /* Border for image */
+    padding: 5px;
+    background: white;
+    border-radius: 0 6px 6px 6px;
+}
+.back-link {
+    display: inline-block;
+    margin-bottom: 30px;
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.back-link:hover {
+    color: var(--primary-dark);
+    transform: translateX(-5px);
+}
+
+.detail-image {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: var(--transition);
+}
+
+.detail-image:hover {
+    transform: scale(1.02);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.blog-detail h1 {
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    font-size: 2rem;
+}
+
+.blog-detail p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.blog-meta {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+    color: #777;
+}
+
+.blog-meta span {
+    margin-left: 15px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.blog-meta i {
+    margin-right: 5px;
+    color: var(--primary-color);
+}
+
+@media (max-width: 768px) {
+    .detail-image {
+        height: 250px;
+    }
+    
+    .blog-detail h1 {
+        font-size: 1.5rem;
+    }
+}
+/* Add these new styles */
+.blog-header h1 i {
+    color: #4CAF50;
+    font-size: 0.8em;
+}
+
+.blog-image-container {
+    position: relative;
+    margin: 20px 0;
+}
+
+.image-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background: rgba(76, 175, 80, 0.8);
+    color: white;
+    padding: 5px 10px;
+    font-size: 0.9em;
+}
+
+.blog-content i {
+    color: #81C784;
+    margin-right: 8px;
+}
+
+.blog-footer {
+    margin-top: 30px;
+    padding-top: 15px;
+    border-top: 1px dashed #ccc;
+}
+
+.tags i {
+    color: #4CAF50;
+    margin-right: 5px;
+}
+
+.badge {
+    margin-right: 5px;
+    font-weight: normal;
+}

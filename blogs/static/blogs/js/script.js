@@ -138,3 +138,56 @@ document.addEventListener('DOMContentLoaded', () => {
     // Update active tab on popstate (browser back/forward)
     window.addEventListener('popstate', setActiveTab);
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    const slider = document.getElementById("servicesSlider");
+    const scrollAmount = slider.offsetWidth / 2;
+
+    let autoScroll = setInterval(() => {
+        slider.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        if (slider.scrollLeft + slider.offsetWidth >= slider.scrollWidth) {
+            setTimeout(() => {
+                slider.scrollTo({ left: 0, behavior: 'smooth' });
+            }, 1000);
+        }
+    }, 3000);
+
+    document.querySelector(".scroll-btn.left").addEventListener("click", () => {
+        slider.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+        resetAutoScroll();
+    });
+
+    document.querySelector(".scroll-btn.right").addEventListener("click", () => {
+        slider.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        resetAutoScroll();
+    });
+
+    function resetAutoScroll() {
+        clearInterval(autoScroll);
+        autoScroll = setInterval(() => {
+            slider.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+            if (slider.scrollLeft + slider.offsetWidth >= slider.scrollWidth) {
+                setTimeout(() => {
+                    slider.scrollTo({ left: 0, behavior: 'smooth' });
+                }, 1000);
+            }
+        }, 3000);
+    }
+});
+document.getElementById('notify-btn').addEventListener('click', function() {
+    fetch('{% url "toggle_notify" %}', {
+      method: 'POST',
+      headers: {
+        'X-CSRFToken': '{{ csrf_token }}',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({})
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        this.querySelector('i').classList.toggle('text-primary');
+        alert(data.notify ? 'تم تفعيل الإشعارات' : 'تم إيقاف الإشعارات');
+      }
+    });
+  });
